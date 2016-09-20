@@ -2,6 +2,11 @@
  * System configuration for Angular 2 samples
  * Adjust as necessary for your application needs.
  */
+
+if(require){
+  System.set('electron', System.newModule(require('electron')));
+}
+
 (function (global) {
   System.config({
     paths: {
