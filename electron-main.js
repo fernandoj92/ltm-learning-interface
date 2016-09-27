@@ -22,7 +22,7 @@ let setApplicationMenu = function () {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 };
 
-function createWindow () {
+let createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
@@ -39,6 +39,35 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+}
+
+let setMenu = () => {
+  fileMenu.template.submenu.find
+}
+
+let setFileMenu = () => {
+    electron.dialog.showOpenDialog({ 
+      title: 'Open a stored Bayesian network',
+      filters: [{ name: 'text', extensions: ['json'] }],
+      properties: ['openFile', 'createDirectory']
+    }, 
+    function(fileNames){
+        if (fileNames === undefined) 
+            return;
+        let fileName = fileNames[0];
+        fs.readFile(fileName, 'utf-8', function (err, fileData) {
+            try{
+                var jsonContent = JSON.parse(fileData);
+                console.log(BrowserWindow.getFocusedWindow())
+                mainWindow.webContents.on('did-finish-load', () => {
+                      mainWindow.webContents.send('load-BN', jsonContent)
+                });
+            }catch(e){
+                console.log(e); //There was an error while parsing
+            }
+        }); // readFile
+    }); // showOpenDialog
+        
 }
 
 // This method will be called when Electron has finished

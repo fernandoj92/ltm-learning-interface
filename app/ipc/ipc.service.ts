@@ -8,6 +8,9 @@ import {ipcRenderer} from 'electron'
 export class IpcService {
 
     constructor() { 
-        ipcRenderer.on('load-BN',function(event,jsonContent){});
+        ipcRenderer.on('load-BN',function(event,jsonContent){
+            alert(JSON.stringify(jsonContent))
+            console.log(JSON.stringify(jsonContent))
+        });
     }
 }
