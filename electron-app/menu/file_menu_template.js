@@ -7,8 +7,13 @@ exports.template = {
     label: 'File',
     submenu: [
         {
-            label: 'Open learning result',
+            label: 'Open',
             accelerator: 'CmdOrCtrl+O',
+            // click() handler set in electron-main.js
+        },
+        {
+            label: 'Save',
+            accelerator: 'CmdOrCtrl+S',
             // click() handler set in electron-main.js
         },
     ]

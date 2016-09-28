@@ -9,18 +9,7 @@ const Menu = electron.Menu
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-
-let setApplicationMenu = function () {
-  
-    let menus = [
-      fileMenu.template, 
-      editMenu.template, 
-      devMenu.template
-      ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
-};
+let mainWindow, menu
 
 let createWindow = () => {
   // Create the browser window.
@@ -41,10 +30,42 @@ let createWindow = () => {
   })
 }
 
-let setMenu = () => {
-  fileMenu.template.submenu.find
+let setApplicationMenu = () => {
+
+  let menus = [
+    fileMenu.template, 
+    editMenu.template, 
+    //devMenu.template
+  ];
+
+  // Functionalities
+  menus[0].submenu
+    .find(item => item.label === 'Open')
+    .click = () => {
+      console.log("Open - click called")
+      //alert("Open Bayesian network");
+      var text = '{ "employees" : [' +
+'{ "firstName":"John" , "lastName":"Doe" },' +
+'{ "firstName":"Anna" , "lastName":"Smith" },' +
+'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+
+  var obj = JSON.parse(text);
+      mainWindow.webContents.send('open-file', obj)
+    }
+
+  menus[0].submenu
+    .find(item => item.label === 'Save')
+    .click = () => {
+      console.log("Save - click called")
+      //alert("Save Bayesian network");
+      mainWindow.webContents.send('save-file');
+    }
+
+  menu = Menu.buildFromTemplate(menus)
+  Menu.setApplicationMenu(menu);
 }
 
+/*
 let setFileMenu = () => {
     electron.dialog.showOpenDialog({ 
       title: 'Open a stored Bayesian network',
@@ -69,7 +90,7 @@ let setFileMenu = () => {
     }); // showOpenDialog
         
 }
-
+*/
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
