@@ -8,6 +8,7 @@ import { remote, ipcRenderer } from 'electron';
 export class AppComponent {
 
   constructor(){
+    
         ipcRenderer.on('load-BN',function(event,jsonContent){
             alert(JSON.stringify(jsonContent))
             console.log(JSON.stringify(jsonContent))
