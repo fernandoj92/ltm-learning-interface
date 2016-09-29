@@ -1,4 +1,4 @@
-export function uuid(): string {
+export function randomUUID(): string {
 
   let uuid:string = "", i:number, random:number;
 
