@@ -3,26 +3,23 @@ import { remote, ipcRenderer } from 'electron';
 
 @Component({
   selector: 'my-app',
-  template: '<h1>My First Angular 2 RC6 App with Electron</h1>'
+  templateUrl: 'app/app.component.html',
+  styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
 
-  constructor(){
-    
-        ipcRenderer.on('load-BN',function(event,jsonContent){
-            alert(JSON.stringify(jsonContent))
-            console.log(JSON.stringify(jsonContent))
-        });
-        
-        ipcRenderer.on('open-file',function(event,jsonContent){
-            alert(JSON.stringify(jsonContent))
-            console.log(JSON.stringify(jsonContent))
-        });
-
+    constructor(){
+        ipcRenderer.on('open-file', this.openFunc);
         ipcRenderer.on('save-file', this.save.bind(this));
+
+        ipcRenderer.on('load-ExecutionResult', this.openFunc);
     }
 
-    open(){ console.log("Open recibido");}
+    private openFunc = (event,jsonContent) => {
+        alert("Opening file")
+        console.log(JSON.stringify(jsonContent))
+    }
 
     save() {console.log("Save recibido");}
- }
+
+}
