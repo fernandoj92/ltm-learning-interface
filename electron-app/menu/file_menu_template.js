@@ -16,5 +16,10 @@ exports.template = {
             accelerator: 'CmdOrCtrl+S',
             // click() handler set in electron-main.js
         },
+        {
+            label: 'Open file',
+            accelerator: 'CmdOrCtrl+U',
+            // click() handler set in electron-main.js
+        },
     ]
 };

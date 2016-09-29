@@ -2,6 +2,7 @@ const fileMenu = require('./electron-app/menu/file_menu_template');
 const editMenu = require('./electron-app/menu/edit_menu_template');
 const devMenu =  require('./electron-app/menu/dev_menu_template');
 
+const fs = require('fs')
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -43,54 +44,55 @@ let setApplicationMenu = () => {
     .find(item => item.label === 'Open')
     .click = () => {
       console.log("Open - click called")
-      //alert("Open Bayesian network");
-      var text = '{ "employees" : [' +
-'{ "firstName":"John" , "lastName":"Doe" },' +
-'{ "firstName":"Anna" , "lastName":"Smith" },' +
-'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
 
-  var obj = JSON.parse(text);
-      mainWindow.webContents.send('open-file', obj)
-    }
+      var text = '{ "employees" : [' +
+        '{ "firstName":"John" , "lastName":"Doe" },' +
+        '{ "firstName":"Anna" , "lastName":"Smith" },' +
+        '{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+
+      var obj = JSON.parse(text);
+          mainWindow.webContents.send('open-file', obj)
+        }
 
   menus[0].submenu
     .find(item => item.label === 'Save')
     .click = () => {
       console.log("Save - click called")
-      //alert("Save Bayesian network");
       mainWindow.webContents.send('save-file');
     }
+  
+  menus[0].submenu
+    .find(item => item.label === 'Open file')
+    .click = () => {
+      console.log("Open file - click called")
+      electron.dialog.showOpenDialog({ 
+        title: 'Open a stored Bayesian network',
+        filters: [{ name: 'text', extensions: ['json'] }],
+        properties: ['openFile', 'createDirectory']
+      }, 
+      function(fileNames){
+          if (fileNames === undefined) 
+              return;
+          let fileName = fileNames[0];
+          fs.readFile(fileName, 'utf-8', function (err, fileData) {
+              try{
+                  console.log(fileData)
+                  var jsonContent = JSON.parse(fileData);
+                  console.log("Enviando load-ExecutionResult")
+                  mainWindow.webContents.send('load-ExecutionResult', jsonContent); 
+              }catch(e){
+                  console.log(e); //There was an error while parsing
+                  // TODO: instead of logging, send notification to the Angular 2 notification manager component
+              }
+          }); // readFile
+      }); // showOpenDialog
+
+    } // Open file click()
 
   menu = Menu.buildFromTemplate(menus)
   Menu.setApplicationMenu(menu);
 }
 
-/*
-let setFileMenu = () => {
-    electron.dialog.showOpenDialog({ 
-      title: 'Open a stored Bayesian network',
-      filters: [{ name: 'text', extensions: ['json'] }],
-      properties: ['openFile', 'createDirectory']
-    }, 
-    function(fileNames){
-        if (fileNames === undefined) 
-            return;
-        let fileName = fileNames[0];
-        fs.readFile(fileName, 'utf-8', function (err, fileData) {
-            try{
-                var jsonContent = JSON.parse(fileData);
-                console.log(BrowserWindow.getFocusedWindow())
-                mainWindow.webContents.on('did-finish-load', () => {
-                      mainWindow.webContents.send('load-BN', jsonContent)
-                });
-            }catch(e){
-                console.log(e); //There was an error while parsing
-            }
-        }); // readFile
-    }); // showOpenDialog
-        
-}
-*/
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
