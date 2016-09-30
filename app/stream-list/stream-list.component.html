@@ -1,20 +1,25 @@
 <div class= "stream-list-title">
     {{title}}
 </div>
+
+<button (click)="changeTitle()">Change Title</button>
+
 <div class="stream-list-contents">
     
     <ul>
         <li *ngFor="let stream of streams">
-            {{stream.name}}
+            {{ stream.UUID }}
+        </li>
+    </ul>
+
+    <ul>
+        <li *ngFor="let fakeStream of fakeStreams">
+            <span class="badge">{{ fakeStream.id }}</span>
+            {{ fakeStream.name }}
         </li>
     </ul>
     
-    <!-- 
-    <ul>
-        <li>Stream Test 1</li>
-        <li>Stream Test 2</li>
-        <li>Stream Test 3</li>
-        <li>Stream Test 4</li>
-    </ul>
-    -->
+    <p *ngIf="fakeStreams.length > 1">ok</p>
+    <p *ngIf="fakeStreams.length > 2">woooh</p>
+    <p *ngIf="fakeStreams.length > 3">ayyy</p>
 </div>

@@ -15,16 +15,16 @@ export class ServiceNotificationsComponent implements OnInit {
     private inMemoryServiceNotificationsSubscription
 
     constructor(
-        private inMemoryDataService: InMemoryDataService) { }
+        private _inMemoryDataService: InMemoryDataService) { }
 
     ngOnInit() {
 
         // InMemoryDataService
-        this.inMemoryServiceNotifications = this.inMemoryDataService.getNotificationGenerator()
+        this.inMemoryServiceNotifications = this._inMemoryDataService.getNotificationGenerator()
         this.inMemoryServiceNotificationsSubscription = this.inMemoryServiceNotifications.subscribe(
-            (msg) => { this.logMessageFunc(this.inMemoryDataService.name(), msg) },
-            (err) => { this.logErrorFunc(this.inMemoryDataService.name(), err) },
-            ()    => { this.logCompletedFunc(this.inMemoryDataService.name())}
+            (msg) => { this.logMessageFunc(this._inMemoryDataService.name(), msg) },
+            (err) => { this.logErrorFunc(this._inMemoryDataService.name(), err) },
+            ()    => { this.logCompletedFunc(this._inMemoryDataService.name())}
         )
 
         

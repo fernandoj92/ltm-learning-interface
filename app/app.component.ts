@@ -9,10 +9,10 @@ import { remote, ipcRenderer } from 'electron';
 export class AppComponent {
 
     constructor(){
-        ipcRenderer.on('open-file', this.openFunc);
-        ipcRenderer.on('save-file', this.save.bind(this));
+        //ipcRenderer.on('open-file', this.openFunc);
+        //ipcRenderer.on('save-file', this.save.bind(this));
 
-        ipcRenderer.on('load-ExecutionResult', this.openFunc);
+        //ipcRenderer.on('load-ExecutionResult', this.openFunc);
     }
 
     private openFunc = (event,jsonContent) => {
