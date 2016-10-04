@@ -18,8 +18,7 @@ import {Observable} from 'rxjs/Observable'
 export class StreamListComponent implements OnInit {
     private memoryEvents: Observable<string>;
     private memoryEventsSubscription;
-    @Input()
-    streams: IdCollection<Stream>;
+    @Input() streams: IdCollection<Stream>;
     title: string = "Your Streams";
 
 
