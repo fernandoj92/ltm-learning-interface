@@ -1,4 +1,5 @@
 import {Subject} from 'rxjs/Subject'
+import {Observable} from 'rxjs/Observable'
 
 export class AbstractNotificationService{
     
@@ -9,11 +10,11 @@ export class AbstractNotificationService{
         this.serviceName = serviceName
     }
 
-    public getNotificationGenerator(): Subject<string>{
+    public getNotificationGenerator(): Observable<string>{
        if(!this.notificationGenerator)
             this.notificationGenerator = new Subject<string>();
 
-       return this.notificationGenerator
+       return this.notificationGenerator.asObservable()
     }
     
     public name(): string{

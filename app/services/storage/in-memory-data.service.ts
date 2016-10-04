@@ -4,22 +4,28 @@ import { Stream } from '../../model/stream'
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
 import * as JsonTransform from '../../util/JsonTransform'
 import * as UUID from '../../util/uuid'
+import { IpcService } from '../ipc/ipc.service';
 
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
-
-import { remote, ipcRenderer } from 'electron';
  
 @Injectable()
 export class InMemoryDataService extends AbstractNotificationService{
 
-    private streams: Stream[]
-    private streamsEventEmitter: Subject<string>
+    private streams: Stream[];
+    private streamsEventEmitter: Subject<string>;
+    private ipcLoadExecutionResultEvents: Observable<string>;
+    private ipcLoadExecutionResultEventsSubscription;
 
-    constructor(){
+    constructor(private _ipcService: IpcService){
         super('InMemoryDataService')
         this.streams =  new Array();
-        ipcRenderer.on('load-ExecutionResult', this.loadExecutionResult);
+        this.ipcLoadExecutionResultEvents =  this._ipcService.getLoadExecutionResultEvents()
+        this.ipcLoadExecutionResultEventsSubscription =  this.ipcLoadExecutionResultEvents
+        .subscribe(
+            (executionResultJson) => this.saveExecutionResult(executionResultJson),
+            (error) => this.notifyMsg('IPC loadExecutionResult event error')
+        )
     }
 
     public getStreamsReference(): Stream[]{ return this.streams }
@@ -30,18 +36,17 @@ export class InMemoryDataService extends AbstractNotificationService{
 
        return this.streamsEventEmitter.asObservable()
     }
-    
-    private loadExecutionResult = (event, executionResult): void => {
-        try
-        {
-            // Test notification
-            this.notifyMsg('load-ExecutionResult event received')
+
+    private saveExecutionResult = (executionResultJson: any): void =>{
+        try {
+            // Test notification message
+            this.notifyMsg('IPC loadExecutionResult event succesfully received')
             // Json transformation
-            JsonTransform.checkExecutionResultJson(executionResult)
+            JsonTransform.checkExecutionResultJson(executionResultJson)
             // Create a new stream object
             let newFileStreamUUID = UUID.randomUUID()
             let newFileStream =  new Stream(
-                [executionResult], 
+                [executionResultJson], 
                 newFileStreamUUID, 
                 "File Stream "+ newFileStreamUUID)
             this.streams.push(newFileStream)

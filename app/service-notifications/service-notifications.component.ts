@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Subject} from 'rxjs/Subject'
+import {Observable} from 'rxjs/Observable'
 
 import { InMemoryDataService } from '../services/storage/in-memory-data.service'
+import { IpcService } from '../services/ipc/ipc.service'
 
 @Component({
     moduleId: module.id,
@@ -11,11 +13,16 @@ import { InMemoryDataService } from '../services/storage/in-memory-data.service'
 })
 export class ServiceNotificationsComponent implements OnInit {
 
-    private inMemoryServiceNotifications: Subject<string>
+    // InMemoryDataService
+    private inMemoryServiceNotifications: Observable<string>
     private inMemoryServiceNotificationsSubscription
+    // IpcService
+    private ipcServiceNotifications: Observable<string>
+    private ipcServiceNotificationsSubscription
 
     constructor(
-        private _inMemoryDataService: InMemoryDataService) { }
+        private _inMemoryDataService: InMemoryDataService,
+        private _ipcService: IpcService) { }
 
     ngOnInit() {
 
@@ -27,6 +34,13 @@ export class ServiceNotificationsComponent implements OnInit {
             ()    => { this.logCompletedFunc(this._inMemoryDataService.name())}
         )
 
+        // IpcService
+        this.ipcServiceNotifications = this._ipcService.getNotificationGenerator()
+        this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
+            (msg) => { this.logMessageFunc(this._ipcService.name(), msg) },
+            (err) => { this.logErrorFunc(this._ipcService.name(), err) },
+            ()    => { this.logCompletedFunc(this._ipcService.name())}
+        )
         
      }
 

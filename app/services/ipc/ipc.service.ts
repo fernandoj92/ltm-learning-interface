@@ -1,12 +1,31 @@
 import { Injectable } from '@angular/core';
 
+import {Subject} from 'rxjs/Subject'
+import {Observable} from 'rxjs/Observable'
+
+import { AbstractNotificationService } from '../notification/abstractNotificationService'
+
 import { remote, ipcRenderer } from 'electron';
 
-// Esta primera version del FileService no sigue buenas practicas de desacoplamiento
-
 @Injectable()
-export class IpcService {
+export class IpcService extends AbstractNotificationService{
 
-    constructor() { 
+    private loadExecutionResultEventsEmitter: Subject<any>
+
+    constructor() {
+        super("IpcService")
+        // loadExecutionResult
+        this.loadExecutionResultEventsEmitter = new Subject<any>();
+        ipcRenderer.on('load-ExecutionResult', this.loadExecutionResult); 
+    }
+
+    private loadExecutionResult = (event, executionResultJson): void => {
+        this.notifyMsg("loadExecutionResult received")
+        this.notifyMsg(executionResultJson.algorithm)
+        this.loadExecutionResultEventsEmitter.next(executionResultJson)
+    }
+
+    public getLoadExecutionResultEvents(): Observable<any>{
+       return this.loadExecutionResultEventsEmitter.asObservable()
     }
 }
