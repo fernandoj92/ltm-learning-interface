@@ -1,12 +1,12 @@
+import { IdElement } from './abstract/IdElement'
 import { ExecutionResult } from './executionResult'
 
-export class Stream {
+export class Stream extends IdElement{
     name: string
-    UUID: string;
     executionResults: ExecutionResult[]
 
     constructor(executionResults: ExecutionResult[], streamUUID: string, streamName: string){
-        this.UUID = streamUUID
+        super(streamUUID)
         this.executionResults = executionResults
         this.name = streamName
     }

@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
+import { IdCollection } from '../model/abstract/IdCollection' 
 import { Stream } from '../model/stream'
 import { ExecutionResult } from '../model/executionResult'
 import { InMemoryDataService } from '../services/storage/in-memory-data.service'
 import * as UUID from '../util/uuid'
+
 
 import {Observable} from 'rxjs/Observable'
 
@@ -17,7 +19,7 @@ export class StreamListComponent implements OnInit {
     private memoryEvents: Observable<string>;
     private memoryEventsSubscription;
     @Input()
-    streams: Stream[];
+    streams: IdCollection<Stream>;
     title: string = "Your Streams";
 
 

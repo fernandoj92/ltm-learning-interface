@@ -1,7 +1,7 @@
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 
-export class AbstractNotificationService{
+export abstract class AbstractNotificationService{
     
     protected serviceName: string = 'Name not defined'
     protected notificationGenerator: Subject<string>

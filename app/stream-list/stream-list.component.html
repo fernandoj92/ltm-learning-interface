@@ -4,8 +4,8 @@
 
 <div class="stream-list-contents">
     <ul>
-        <li *ngFor="let stream of streams">
-            {{ stream.UUID }}
+        <li *ngFor="let stream of streams.contents">
+            {{ stream.getId() }}
         </li>
     </ul>
 </div>
