@@ -2,13 +2,14 @@ import { IdElement } from './IdElement'
 
 export class IdCollection <T extends IdElement> {
 
-    contents: Array<IdElement>
+    contents: Array<T>
 
     constructor(){
-        this.contents = new Array<IdElement>()
+        this.contents = new Array<T>()
     }
 
-    public contains (element: IdElement): boolean {
+
+    public contains (element: T): boolean {
         return this.containsId(element.getId())
     }
 
@@ -20,7 +21,7 @@ export class IdCollection <T extends IdElement> {
         return false;
     }
 
-    public get(_id: string): IdElement {
+    public get(_id: string): T {
         for (var i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === _id)
                 return this.contents[i];
@@ -38,7 +39,20 @@ export class IdCollection <T extends IdElement> {
         return false;
     }
 
-    public add(element: IdElement): void {
+    public add(element: T): void {
         this.contents.push(element)
+    }
+
+    public update(element: T): void {
+        let index = this.getIndex(element)
+        if(index !== -1)
+            this.contents[index] = element
+    }
+
+    private getIndex(element: T): number {
+         for (var i = 0; i < this.contents.length; i++) 
+            if(this.contents[i].getId() === element.getId())
+                return i;
+        return -1;
     }
 }
