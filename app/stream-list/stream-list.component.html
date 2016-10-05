@@ -1,11 +1,18 @@
-<div class= "stream-list-title">
-    {{title}}
-</div>
+<div class="">
+    <div class= "stream-list-title">
+        {{title}}
+    </div>
 
-<div class="stream-list-contents">
-    <ul>
-        <li *ngFor="let stream of streams.contents">
-            {{ stream.getId() }}
-        </li>
-    </ul>
+    <div class="stream-list-contents">
+        <div class="stream-item" *ngFor="let stream of streams.contents">
+            <div class="stream-item-name"> 
+                File Stream 12-12-2016 
+                <span class="nResults"> 4 </span>
+            </div>
+            
+            <div class="result-item" *ngFor="let result of stream.executionResults.contents">
+                Execution Result 03-11-1996                
+            </div>
+        </div>
+    </div>
 </div>

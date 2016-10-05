@@ -13,6 +13,7 @@ import {Observable} from 'rxjs/Observable'
     moduleId: module.id,
     selector: 'stream-list',
     templateUrl: 'stream-list.component.html',
+    styleUrls:['stream-list.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StreamListComponent implements OnInit {
@@ -35,6 +36,8 @@ export class StreamListComponent implements OnInit {
             (err) => { console.log("There was an error with the memory event emission") }
         );
      }
+
+     onselect
 
      private newMemoryEvent = (msg) => {
         // Update the view to show the memory update
