@@ -9,6 +9,7 @@ import { CptViewComponent } from './dashboard/cpt-view/cpt-view.component'
 import { DagViewComponent } from './dashboard/dag-view/dag-view.component'
 import { ServiceNotificationsComponent } from './service-notifications/service-notifications.component'
 import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
+import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
 //Services
 import { IpcService } from './services/ipc/ipc.service';
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
@@ -21,7 +22,8 @@ import { InMemoryDataService } from './services/storage/in-memory-data.service'
     StreamListComponent,
     CptViewComponent,
     DagViewComponent,
-    TestDagComponent
+    TestDagComponent,
+    TestCytoscapeComponent
    ],
   providers:    [ 
     IpcService,
