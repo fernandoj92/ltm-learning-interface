@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Stream } from '../../model/stream'
 import { IdCollection } from '../../model/abstract/idCollection'
+import { Stream } from '../../model/stream'
+import { ExecutionResult, JsonExecutionResult } from '../../model/ExecutionResult'
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
+import { IpcService } from '../ipc/ipc.service'
 import * as JsonTransform from '../../util/JsonTransform'
 import * as UUID from '../../util/uuid'
-import { IpcService } from '../ipc/ipc.service'
 
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
@@ -15,7 +16,7 @@ export class InMemoryDataService extends AbstractNotificationService{
 
     private streams: IdCollection<Stream>;
     private streamsEventEmitter: Subject<string>;
-    private ipcLoadExecutionResultEvents: Observable<string>;
+    private ipcLoadExecutionResultEvents: Observable<JsonExecutionResult>;
     private ipcLoadExecutionResultEventsSubscription;
 
     constructor(private _ipcService: IpcService){
@@ -24,7 +25,7 @@ export class InMemoryDataService extends AbstractNotificationService{
         this.ipcLoadExecutionResultEvents =  this._ipcService.getLoadExecutionResultEvents()
         this.ipcLoadExecutionResultEventsSubscription =  this.ipcLoadExecutionResultEvents
         .subscribe(
-            (executionResultJson) => this.saveExecutionResult(executionResultJson),
+            (executionResultJson) => this.loadERinMemory(executionResultJson),
             (error) => this.notifyMsg('IPC loadExecutionResult event error')
         )
     }
@@ -38,30 +39,32 @@ export class InMemoryDataService extends AbstractNotificationService{
        return this.streamsEventEmitter.asObservable()
     }
 
-    private saveExecutionResult = (executionResultJson: any): void =>{
+    private loadERinMemory = (executionResultJson: JsonExecutionResult): void =>{
         try {
             // Test notification message
             this.notifyMsg('IPC loadExecutionResult event succesfully received')
             // Json transformation
             JsonTransform.checkExecutionResultJson(executionResultJson)
-            /*
-            if(executionResultJson.streamUUID === void 0){
-
+            // Create the model object equivalent for JsonExecutionResult
+            let newExecutionResult: ExecutionResult = ExecutionResult.construct(executionResultJson)
+            // Check if its corresponding stream currently exists in memory
+            if(newExecutionResult.streamId === void 0 || !this.streams.containsId(newExecutionResult.streamId )){
+                let newFileStreamUUID = UUID.randomUUID()
+                let erCollection = new IdCollection<ExecutionResult>();
+                erCollection.add(newExecutionResult)
+                let newFileStream =  new Stream(
+                    erCollection, 
+                    newFileStreamUUID, 
+                    "File Stream "+ newFileStreamUUID)
+                this.streams.add(newFileStream)
+                // Notify the subscribed components
+                this.newStreamEvent(newFileStream)
+            } else {
+                let erStream = this.streams.get(newExecutionResult.streamId)
+                erStream.push(newExecutionResult)
+                // Notify the subscribed components
+                this.updateStreamEvent(erStream)
             }
-
-            if(executionResultJson.streamUUID){
-
-            }*/
-            // Create a new stream object
-            let newFileStreamUUID = UUID.randomUUID()
-            let newFileStream =  new Stream(
-                [executionResultJson], 
-                newFileStreamUUID, 
-                "File Stream "+ newFileStreamUUID)
-            this.streams.add(newFileStream)
-            // Notify the subscribed components
-            this.newStreamEvent(newFileStream)
-
         }catch(err){
             this.notifyError(err)
         }
