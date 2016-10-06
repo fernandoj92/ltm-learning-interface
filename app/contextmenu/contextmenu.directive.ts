@@ -1,5 +1,6 @@
 import { Directive, Input } from '@angular/core';
-import { MyContextMenuService } from './contextmenu.service'
+import { MyContextMenuService, ContextMenuClickEvent } from './contextmenu.service'
+import { IContextMenuLinkConfig } from './contextmenu-linkconfig'
 
 @Directive({
   selector:'[context-menu]',
@@ -7,13 +8,24 @@ import { MyContextMenuService } from './contextmenu.service'
 })
 export class ContextMenuDirective{
 
-  @Input('context-menu') links;
+  private _item: any
+
+  @Input('context-menu') links: IContextMenuLinkConfig[];
+
+  @Input() set item(item:any){
+    this._item = item
+  }
 
   constructor(private _contextMenuService:MyContextMenuService){
   }
 
-  rightClicked(event:MouseEvent){
-    this._contextMenuService.show.next({event:event,obj:this.links});
+  rightClicked(event: MouseEvent){
+
+    console.log("rightclicked")
+    console.log(event.clientX)
+    console.log(this._item)
+
+    this._contextMenuService.newShowMenuEvent(new ContextMenuClickEvent(this.links, event, this._item));
     event.preventDefault(); // to prevent the browser contextmenu
   }
 }

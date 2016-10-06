@@ -11,7 +11,6 @@ import { ServiceNotificationsComponent } from './service-notifications/service-n
 import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
 import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
 import { ContextMenuHolderComponent } from './contextmenu/contextmenu-holder.component'
-import { ContextMenuTestComponent } from './contextmenu-test/contextmenu-test.component'
 // Directives
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
@@ -36,7 +35,6 @@ import { MyContextMenuService } from './contextmenu/contextmenu.service'
     TestCytoscapeComponent,
     ContextMenuDirective,
     ContextMenuHolderComponent,
-    ContextMenuTestComponent
    ],
   bootstrap:    [ AppComponent ]
 })

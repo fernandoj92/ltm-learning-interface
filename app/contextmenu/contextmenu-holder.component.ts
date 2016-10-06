@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyContextMenuService } from './contextmenu.service'
+import { IContextMenuLinkConfig } from './contextmenu-linkconfig'
+
 
 @Component({
   moduleId: module.id,
@@ -12,24 +14,21 @@ import { MyContextMenuService } from './contextmenu.service'
   host:{
     '(document:click)':'clickedOutside()'
   },
-  template:
-  `<div [ngStyle]="locationCss" class="container">
-      <ul>
-          <li (click)="link.subject.next(link.title)" class="link" *ngFor="let link of links">
-              {{link.title}}
-          </li>
-      </ul>
-    </div>
-  `
+  templateUrl: 'contextmenu-holder.component.html'
 })
 export class ContextMenuHolderComponent implements OnInit{
 
-  links = [];
-  isShown = false;
+  public links: IContextMenuLinkConfig[] = [];
+  public isShown = false;
+  public item: any;
+
+  private showMenuEventsSubscription
+
   private mouseLocation :{left:number,top:number} = {left:0, top:0};
 
   constructor(private _contextMenuService: MyContextMenuService){
-    _contextMenuService.show.subscribe(e => this.showMenu(e.event,e.obj));
+    this.showMenuEventsSubscription = _contextMenuService.getShowMenuEvents()
+      .subscribe(e => this.showMenuEvent(e.item, e.event, e.links));
   }
 
   ngOnInit(){
@@ -46,17 +45,34 @@ export class ContextMenuHolderComponent implements OnInit{
     };
   }
 
-  clickedOutside(){
+  public clickedOutside(){
     this.isShown= false; // hide the menu
   }
 
-  // show the menu and set the location of the mouse
-  showMenu(event,links){
-    this.isShown = true;
+  public showMenuEvent(item: any, event: MouseEvent, links?: any[]){
+    this.showMenu();
     this.links = links;
+    this.item = item;
     this.mouseLocation = {
-      left:event.clientX,
-      top:event.clientY
-    }
+      left: event.clientX,
+      top: event.clientY,
+    };
+  }
+
+  public execute(link: IContextMenuLinkConfig, $event?:MouseEvent): void{
+    //link.subject.next(link.title)
+     /*if (this.isDisabled(link)) {
+      return;
+    }*/
+    this.hideMenu();
+    link.click(this.item, $event);
+  }
+
+  public hideMenu(){
+    this.isShown = false;
+  }
+
+  public showMenu(){
+    this.isShown = true;
   }
 }
