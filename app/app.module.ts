@@ -10,24 +10,33 @@ import { DagViewComponent } from './dashboard/dag-view/dag-view.component'
 import { ServiceNotificationsComponent } from './service-notifications/service-notifications.component'
 import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
 import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
-//Services
+import { ContextMenuHolderComponent } from './contextmenu/contextmenu-holder.component'
+import { ContextMenuTestComponent } from './contextmenu-test/contextmenu-test.component'
+// Directives
+import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
+// Services
 import { IpcService } from './services/ipc/ipc.service';
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
+import { MyContextMenuService } from './contextmenu/contextmenu.service'
 
 @NgModule({
   imports:      [ BrowserModule ],
-  declarations: [ 
+  providers:    [ 
+    IpcService,
+    InMemoryDataService,
+    MyContextMenuService
+   ],
+   declarations: [ 
     AppComponent,
     ServiceNotificationsComponent,
     StreamListComponent,
     CptViewComponent,
     DagViewComponent,
     TestDagComponent,
-    TestCytoscapeComponent
-   ],
-  providers:    [ 
-    IpcService,
-    InMemoryDataService
+    TestCytoscapeComponent,
+    ContextMenuDirective,
+    ContextMenuHolderComponent,
+    ContextMenuTestComponent
    ],
   bootstrap:    [ AppComponent ]
 })

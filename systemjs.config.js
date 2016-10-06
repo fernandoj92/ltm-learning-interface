@@ -30,7 +30,7 @@ if(require){
       'rxjs':                       'npm:rxjs',
       'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'd3': 'node_modules/d3/d3.min.js',
-      'angular2-websocket/angular2-websocket': 'node_modules/angular2-websocket/angular2-websocket.js'
+      'angular2-websocket/angular2-websocket': 'node_modules/angular2-websocket/angular2-websocket.js',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
