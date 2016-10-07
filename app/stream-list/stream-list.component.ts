@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 
 import { IdCollection } from '../model/abstract/IdCollection' 
 import { Stream } from '../model/stream'
@@ -7,6 +7,7 @@ import { InMemoryDataService } from '../services/storage/in-memory-data.service'
 import * as UUID from '../util/uuid'
 import { IContextMenuLinkConfig } from '../contextmenu/contextmenu-linkconfig'
 
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Observable} from 'rxjs/Observable'
 import {Subject} from 'rxjs/Subject'
 
@@ -25,16 +26,32 @@ export class StreamListComponent implements OnInit {
     // View properties
     title: string = "Your Streams";
     @Input() streams: IdCollection<Stream>;
+
     // Context menus
     streamItemMenu: IContextMenuLinkConfig[]
     resultItemMenu: IContextMenuLinkConfig[]
+    private rightClickedStream: Stream
+    private rightClickedResult: ExecutionResult
+
+    // Modal windows
+    @ViewChild('deleteStreamModal') deleteStreamModal: ModalComponent
+    // Modal window options
+    animation: boolean = true;
+    keyboard: boolean = true;
+    backdrop: string = 'static';
+    cssClass: string = '';
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
         private _cdr: ChangeDetectorRef) {
         this.streamItemMenu  = [
             {title:'Rename', click: (item, $event) => this.streamRenameAction(item, $event)},
-            {title:'Delete', click: (item, $event) => this.streamDeleteAction(item, $event)},
+            {title:'Delete', click: (item, $event) =>{ 
+                this.deleteStreamModal.open();
+                this.rightClickedStream =  item;
+                // this.streamDeleteAction(item, $event)
+                }
+            },
             {title:'Run', click: (item, $event) => this.streamRunAction(item, $event)},
             {title:'Properties', click: (item, $event) => this.streamPropertiesAction(item, $event)}
         ];
@@ -64,13 +81,17 @@ export class StreamListComponent implements OnInit {
         this._cdr.detectChanges(); 
      }
 
+     private deleteRightClickedStream(){
+         this.streams.remove(this.rightClickedStream.getId())
+     }
+
      private streamRenameAction = (stream: Stream, $event?: MouseEvent) => {
         alert("streamRenameAction sobre "+ stream.getId())
      }
 
-     private streamDeleteAction = (stream: Stream, $event?: MouseEvent) => {
-         
-     }
+     /*private streamDeleteAction = (stream: Stream, $event?: MouseEvent) => {
+         this.deleteStreamModal.open()
+     }*/
 
      private streamRunAction = (stream: Stream, $event?: MouseEvent) => {
          

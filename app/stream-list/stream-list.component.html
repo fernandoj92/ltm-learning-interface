@@ -17,3 +17,16 @@
         </div>
     </div>
 </div>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #deleteStreamModal  >
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">I'm a modal!</h4>
+        </modal-header>
+        <modal-body>
+            This is the body
+        </modal-body>
+        <modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteRightClickedStream()">Delete</button>
+            <button type="button" class="btn btn-primary" autofocus (click)="navigateModal.dismiss()">Cancel</button>
+        </modal-footer>
+</modal>

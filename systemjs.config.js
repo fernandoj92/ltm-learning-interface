@@ -46,6 +46,9 @@ if(require){
       },
       "ang2-websocket":{
         "defaultExtension": "js"
+      },
+      'ng2-bs3-modal':{
+        "defaultExtension": "js"
       }
     }
   });

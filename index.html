@@ -19,6 +19,7 @@
     <script src="lib/cytoscape.min.js"></script>
     <script src="lib/dagre.min.js"></script>
     <script src="lib/cytoscape-dagre.js"></script>
+
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
@@ -33,6 +34,18 @@
 <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+
+    // ng2-modal dependencies
+    window.$ = window.jQuery = require('jquery');
+    const bootstrap = require('bootstrap')
+
+    // Will be true if bootstrap is loaded, false otherwise
+    let bootstrap_enabled = (typeof $().modal == 'function');
+    if(bootstrap_enabled=== true)
+        alert('bootstrap')
+    else{
+        alert('no' + bootstrap_enabled)
+    }
 </script>
 
 </html>

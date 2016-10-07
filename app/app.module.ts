@@ -1,7 +1,8 @@
 
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+// Modules
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 // Components
 import { AppComponent }   from './app.component';
 import { StreamListComponent } from './stream-list/stream-list.component'
@@ -19,7 +20,10 @@ import { InMemoryDataService } from './services/storage/in-memory-data.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
 
 @NgModule({
-  imports:      [ BrowserModule ],
+  imports:      [ 
+    BrowserModule,
+    Ng2Bs3ModalModule
+  ],
   providers:    [ 
     IpcService,
     InMemoryDataService,
