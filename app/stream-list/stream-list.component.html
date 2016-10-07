@@ -5,13 +5,13 @@
 
     <div class="stream-list-contents">
         <div class="stream-item" *ngFor="let stream of streams.contents">
-            <div [context-menu]="streamItemMenu" [item]="stream"  class="stream-item-name"> 
+            <div [context-menu]="streamItemMenu" [contextMenuItem]="stream"  class="stream-item-name"> 
                 File Stream 12-12-2016 
                 <span class="nResults"> 4 </span>
             </div>
             
             <div class="result-item" *ngFor="let result of stream.executionResults.contents" 
-                [context-menu]="resultItemMenu" [item]="result">
+                [context-menu]="resultItemMenu" [contextMenuItem]="result">
                  Execution Result 03-11-1996                
             </div>
         </div>

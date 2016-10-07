@@ -47,10 +47,12 @@ export class InMemoryDataService extends AbstractNotificationService{
             JsonTransform.checkExecutionResultJson(executionResultJson)
             // Create the model object equivalent for JsonExecutionResult
             let newExecutionResult: ExecutionResult = ExecutionResult.construct(executionResultJson)
+            
             // Check if its corresponding stream currently exists in memory
-            if(newExecutionResult.streamId === void 0 || !this.streams.containsId(newExecutionResult.streamId )){
+            if(newExecutionResult.streamId === void 0){
                 let newFileStreamUUID = UUID.randomUUID()
                 let erCollection = new IdCollection<ExecutionResult>();
+                newExecutionResult.streamId = newFileStreamUUID
                 erCollection.add(newExecutionResult)
                 let newFileStream =  new Stream(
                     erCollection, 
@@ -59,6 +61,20 @@ export class InMemoryDataService extends AbstractNotificationService{
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
                 this.newStreamEvent(newFileStream)
+            
+            // If the result provides a streamId, we make use of it
+            }else if(!this.streams.containsId(newExecutionResult.streamId)){
+                let erCollection = new IdCollection<ExecutionResult>();
+                erCollection.add(newExecutionResult)
+                let newFileStream =  new Stream(
+                    erCollection, 
+                    newExecutionResult.streamId, 
+                    "File Stream "+ newExecutionResult.streamId)
+                this.streams.add(newFileStream)
+                // Notify the subscribed components
+                this.newStreamEvent(newFileStream)
+
+            // The result provides a streamId and its corresponding stream is currently stored in memory
             } else {
                 let erStream = this.streams.get(newExecutionResult.streamId)
                 erStream.push(newExecutionResult)

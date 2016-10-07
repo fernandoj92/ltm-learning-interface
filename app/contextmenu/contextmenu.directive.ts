@@ -11,8 +11,8 @@ export class ContextMenuDirective{
   private _item: any
 
   @Input('context-menu') links: IContextMenuLinkConfig[];
-
-  @Input() set item(item:any){
+  
+  @Input() set contextMenuItem(item:any){
     this._item = item
   }
 
