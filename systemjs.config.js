@@ -8,6 +8,9 @@ if(require){
 }
 
 (function (global) {
+
+  var plugin = 'bootstrap'; // js-native / vex
+
   System.config({
     paths: {
       // paths serve as alias
@@ -30,7 +33,9 @@ if(require){
       'rxjs':                       'npm:rxjs',
       'd3': 'node_modules/d3/d3.min.js',
       'angular2-websocket/angular2-websocket': 'node_modules/angular2-websocket/angular2-websocket.js',
-      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
+      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal',
+      'angular2-modal': 'node_modules/angular2-modal/bundles/angular2-modal.umd.js',
+      'angular2-modal/plugins/bootstrap': 'node_modules/angular2-modal/bundles/angular2-modal.bootstrap.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -44,8 +49,14 @@ if(require){
       "d3": {
         "defaultExtension": "js"
       },
-      "ang2-websocket":{
+      "ang2-websocket": {
         "defaultExtension": "js"
+      },
+      'angular2-modal': { 
+        defaultExtension: 'js'
+      },
+      'angular2-modal/plugins/bootstrap': {
+        defaultExtension: 'js', 
       }
     }
   });
