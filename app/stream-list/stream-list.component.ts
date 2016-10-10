@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { IdCollection } from '../model/abstract/IdCollection' 
 import { Stream } from '../model/stream'
@@ -16,7 +16,8 @@ import {Subject} from 'rxjs/Subject'
     selector: 'stream-list',
     templateUrl: 'stream-list.component.html',
     styleUrls:['stream-list.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush, 
+    encapsulation: ViewEncapsulation.None
 })
 export class StreamListComponent implements OnInit {
     
@@ -40,6 +41,7 @@ export class StreamListComponent implements OnInit {
     keyboard: boolean = true;
     backdrop: string = 'static';
     cssClass: string = '';
+    css: boolean = false;
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
