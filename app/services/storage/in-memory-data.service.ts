@@ -54,10 +54,12 @@ export class InMemoryDataService extends AbstractNotificationService{
                 let erCollection = new IdCollection<ExecutionResult>();
                 newExecutionResult.streamId = newFileStreamUUID
                 erCollection.add(newExecutionResult)
+                let streamCreateDate = new Date()
                 let newFileStream =  new Stream(
                     erCollection, 
                     newFileStreamUUID, 
-                    "File Stream "+ newFileStreamUUID)
+                    "File Stream "+ newFileStreamUUID,
+                    streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
                 this.newStreamEvent(newFileStream)
@@ -66,10 +68,12 @@ export class InMemoryDataService extends AbstractNotificationService{
             }else if(!this.streams.containsId(newExecutionResult.streamId)){
                 let erCollection = new IdCollection<ExecutionResult>();
                 erCollection.add(newExecutionResult)
+                let streamCreateDate = new Date()
                 let newFileStream =  new Stream(
                     erCollection, 
                     newExecutionResult.streamId, 
-                    "File Stream "+ newExecutionResult.streamId)
+                    "File Stream "+ streamCreateDate.format("HH:MM:SS DD-MM-YYYY"),
+                    streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
                 this.newStreamEvent(newFileStream)

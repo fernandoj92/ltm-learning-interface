@@ -5,11 +5,13 @@ import { ExecutionResult } from './executionResult'
 export class Stream extends IdElement{
     name: string
     executionResults: IdCollection<ExecutionResult>
+    createDate: Date
 
-    constructor(executionResults: IdCollection<ExecutionResult>, streamUUID: string, streamName: string){
+    constructor(executionResults: IdCollection<ExecutionResult>, streamUUID: string, streamName: string, createDate: Date){
         super(streamUUID)
         this.executionResults = executionResults
         this.name = streamName
+        this.createDate = createDate
     }
 
     public push(executionResult: ExecutionResult): boolean {

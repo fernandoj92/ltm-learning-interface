@@ -1,7 +1,7 @@
-<div [ngStyle]="locationCss" class="container">
-      <ul>
-          <li (click)="execute(link, $event)" class="link" *ngFor="let link of links">
-              {{link.title}}
-          </li>
+<div [ngStyle]="locationCss" class="contextContainer">
+      <ul class="">
+        <div class ="contextLinkContainer" (click)="execute(link, $event)" *ngFor="let link of links"> 
+            <li class="contextLink"> {{link.title}} </li>
+          </div>
       </ul>
 </div>

@@ -31,11 +31,12 @@ export class StreamListComponent implements OnInit {
     // Context menus
     streamItemMenu: IContextMenuLinkConfig[]
     resultItemMenu: IContextMenuLinkConfig[]
-    private rightClickedStream: Stream
-    private rightClickedResult: ExecutionResult
+    rightClickedStream: Stream
+    rightClickedResult: ExecutionResult
 
     // Modal windows
     @ViewChild('deleteStreamModal') deleteStreamModal: ModalComponent
+    @ViewChild('renameStreamModal') renameStreamModal: ModalComponent
     // Modal window options
     animation: boolean = true;
     keyboard: boolean = true;
@@ -46,12 +47,23 @@ export class StreamListComponent implements OnInit {
     constructor(
         private _inMemoryDataService: InMemoryDataService,
         private _cdr: ChangeDetectorRef) {
+            
+        // Initialization of the rightClickedStream
+        this.rightClickedStream = new Stream(null, 'none', 'none', new Date())
+        // Initialization of the rightClickedResult
+        this.rightClickedResult = new ExecutionResult('none', null, 'none', -1, -1, -1)
+
         this.streamItemMenu  = [
-            {title:'Rename', click: (item, $event) => this.streamRenameAction(item, $event)},
+            {title:'Rename', click: (item, $event) => {
+                    this.renameStreamModal.open();
+                    this.rightClickedStream = item;
+                    this.updateView();
+                }
+            },
             {title:'Delete', click: (item, $event) =>{ 
-                this.deleteStreamModal.open();
-                this.rightClickedStream =  item;
-                // this.streamDeleteAction(item, $event)
+                    this.deleteStreamModal.open();
+                    this.rightClickedStream =  item;
+                    this.updateView();
                 }
             },
             {title:'Run', click: (item, $event) => this.streamRunAction(item, $event)},
@@ -76,15 +88,25 @@ export class StreamListComponent implements OnInit {
         );
      }
 
-     private newMemoryEvent = (msg) => {
-        // Update the view to show the memory update
-        console.log("newMemoryEvent received: "+ msg)
+    private updateView(){
         this._cdr.markForCheck();
         this._cdr.detectChanges(); 
      }
 
+     private newMemoryEvent = (msg) => {
+        // Update the view to show the memory update
+        console.log("newMemoryEvent received: "+ msg)
+        this.updateView()
+     }
+
+
      private deleteRightClickedStream(){
          this.streams.remove(this.rightClickedStream.getId())
+         // Not neccesary to update the view because
+     }
+
+     private renameRightClickedStream(){
+         this.updateView()
      }
 
      private streamRenameAction = (stream: Stream, $event?: MouseEvent) => {

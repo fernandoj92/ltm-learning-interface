@@ -2,6 +2,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // Modules
+import { FormsModule } from '@angular/forms';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 // Components
 import { AppComponent }   from './app.component';
@@ -12,6 +13,7 @@ import { ServiceNotificationsComponent } from './service-notifications/service-n
 import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
 import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
 import { ContextMenuHolderComponent } from './contextmenu/contextmenu-holder.component'
+import { ModalWindowTestComponent } from './modal-window-testing/modal-window-test.component'
 // Directives
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
@@ -22,6 +24,7 @@ import { MyContextMenuService } from './contextmenu/contextmenu.service'
 @NgModule({
   imports:      [ 
     BrowserModule,
+    FormsModule,
     Ng2Bs3ModalModule
   ],
   providers:    [ 
@@ -39,6 +42,7 @@ import { MyContextMenuService } from './contextmenu/contextmenu.service'
     TestCytoscapeComponent,
     ContextMenuDirective,
     ContextMenuHolderComponent,
+    ModalWindowTestComponent
    ],
   bootstrap:    [ AppComponent ]
 })

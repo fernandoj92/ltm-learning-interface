@@ -13,9 +13,10 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
 
     <link rel="stylesheet" type="text/css" href="base.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!-- 2. Configure SystemJS -->
     <script src="systemjs.config.js"></script>
-    <!-- 3. My own JS library that I don't know how to propoerly include yet -->
+    <!-- 3. My own JS library that I don't know how to properly include yet -->
     <script src="lib/cytoscape.min.js"></script>
     <script src="lib/dagre.min.js"></script>
     <script src="lib/cytoscape-dagre.js"></script>
@@ -39,13 +40,6 @@
     window.$ = window.jQuery = require('jquery');
     const bootstrap = require('bootstrap')
 
-    // Will be true if bootstrap is loaded, false otherwise
-    let bootstrap_enabled = (typeof $().modal == 'function');
-    if(bootstrap_enabled=== true)
-        alert('bootstrap')
-    else{
-        alert('no' + bootstrap_enabled)
-    }
 </script>
 
 </html>
