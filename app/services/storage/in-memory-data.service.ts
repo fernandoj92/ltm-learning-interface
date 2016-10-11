@@ -105,8 +105,8 @@ export class InMemoryDataService extends AbstractNotificationService{
 
     // View -> Memory 
     // Por lo tanto, es necesario ?
-    private deleteStreamEvent(stream: Stream): void {
-        this.notifyMsg("Stream "+ stream.getId() +" deleted")
+    private deleteStreamEvent(streamId: string): void {
+        this.notifyMsg("Stream "+ streamId +" deleted")
         this.streamsEventEmitter.next("delete-stream")
     }
 

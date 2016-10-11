@@ -23,4 +23,11 @@ export class Stream extends IdElement{
         this.executionResults.add(executionResult)
         return false
     }
+
+    public remove(executionResult: ExecutionResult): boolean{
+        if(!this.executionResults.contains(executionResult))
+            return false
+        
+        this.executionResults.remove(executionResult.getId())
+    }
 }

@@ -97,9 +97,29 @@ export class StreamListComponent implements OnInit {
         );
      }
 
-    public selectExecutionResult(result: ExecutionResult, $event: MouseEvent){
+    deleteRightClickedStream(){
+         let streamId = this.rightClickedStream.getId()
+         this.streams.remove(streamId)
+         this._streamListOutputService.deleteStreamEvent(streamId)
+         // Not neccesary to update the view because it will generate a memory event????????
+          this.updateView()
+    }
+
+    renameRightClickedStream(){
+        this.updateView()
+    }
+
+    selectExecutionResult(result: ExecutionResult, $event: MouseEvent){
         this.selectedResult = result;
+        // Avisar correctamente a los componentes relaccionados
         this._streamListOutputService.selectResultEvent(this.selectedResult)
+    }
+
+    deleteRightClickedExecutionResult(){
+        let resultId = this.rightClickedResult.streamId
+        this.streams.get(resultId).remove(this.rightClickedResult)
+        // Avisar correctamente a los componentes relaccionados
+        this._streamListOutputService.deleteResultEvent(resultId)
     }
 
     private updateView(){
@@ -111,16 +131,6 @@ export class StreamListComponent implements OnInit {
         // Update the view to show the memory update
         console.log("newMemoryEvent received: "+ msg)
         this.updateView()
-     }
-
-
-     private deleteRightClickedStream(){
-         this.streams.remove(this.rightClickedStream.getId())
-         // Not neccesary to update the view because
-     }
-
-     private renameRightClickedStream(){
-         this.updateView()
      }
 
      private streamRenameAction = (stream: Stream, $event?: MouseEvent) => {
