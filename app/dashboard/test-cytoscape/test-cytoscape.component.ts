@@ -1,4 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ExecutionResult } from '../../model/executionResult'
+import { StreamListOutputService } from '../../stream-list/stream-list-output.service'
+import {Observable} from 'rxjs/Observable'
 
 declare var cytoscape: any;
 
@@ -10,9 +13,24 @@ declare var cytoscape: any;
 })
 export class TestCytoscapeComponent implements OnInit {
 
-    @ViewChild('test') test
+    @ViewChild('test') test;
 
-    constructor(private eltRef:ElementRef) {}
+	private selectedResultEvents: Observable<ExecutionResult>;
+	private selectedResultEventsSubscription;
+	private selectedResult: ExecutionResult;
+
+    constructor(private _streamListOutputService: StreamListOutputService,
+				private eltRef:ElementRef) {
+		this.selectedResult = void 0;
+	}
+
+	ngOnInit() {
+		this.selectedResultEvents = this._streamListOutputService.getSelectedResultEventEmitter();
+		this.selectedResultEventsSubscription = this.selectedResultEvents.subscribe(
+            (result) => this.newSelectedResultEvent(result),
+            (err) => { console.log("There was an error with the selectedResult event emission") }
+        );
+	 }
 
     ngAfterViewInit() {
 
@@ -84,5 +102,9 @@ export class TestCytoscapeComponent implements OnInit {
 				});
     }
 
-    ngOnInit() { }
+	private newSelectedResultEvent(result: ExecutionResult){
+		if(this.selectedResult === void 0 || this.selectedResult.getId() !== result.getId())
+			this.selectedResult = result
+		console.log('selected result: '+ result.getId())
+	}
 }

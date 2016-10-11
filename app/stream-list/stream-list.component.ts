@@ -1,11 +1,15 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { IdCollection } from '../model/abstract/IdCollection' 
+// Utils
+import { IdCollection } from '../model/abstract/IdCollection'
+import * as UUID from '../util/uuid' 
+import { IContextMenuLinkConfig } from '../contextmenu/contextmenu-linkconfig'
+// Model
 import { Stream } from '../model/stream'
 import { ExecutionResult } from '../model/executionResult'
+// Services
 import { InMemoryDataService } from '../services/storage/in-memory-data.service'
-import * as UUID from '../util/uuid'
-import { IContextMenuLinkConfig } from '../contextmenu/contextmenu-linkconfig'
+import { StreamListOutputService } from './stream-list-output.service'
 
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Observable} from 'rxjs/Observable'
@@ -21,8 +25,12 @@ import {Subject} from 'rxjs/Subject'
 })
 export class StreamListComponent implements OnInit {
     
+    // Memory events
     private memoryEvents: Observable<string>;
     private memoryEventsSubscription;
+
+    // Communication channel with the dag-view and cpt-view components
+    private selectedResult: ExecutionResult
 
     // View properties
     title: string = "Your Streams";
@@ -46,6 +54,7 @@ export class StreamListComponent implements OnInit {
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
+        private _streamListOutputService: StreamListOutputService,
         private _cdr: ChangeDetectorRef) {
             
         // Initialization of the rightClickedStream
@@ -87,6 +96,11 @@ export class StreamListComponent implements OnInit {
             (err) => { console.log("There was an error with the memory event emission") }
         );
      }
+
+    public selectExecutionResult(result: ExecutionResult, $event: MouseEvent){
+        this.selectedResult = result;
+        this._streamListOutputService.selectResultEvent(this.selectedResult)
+    }
 
     private updateView(){
         this._cdr.markForCheck();

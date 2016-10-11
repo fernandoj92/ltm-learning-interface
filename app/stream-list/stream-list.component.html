@@ -7,11 +7,12 @@
         <div class="stream-item" *ngFor="let stream of streams.contents">
             <div [context-menu]="streamItemMenu" [contextMenuItem]="stream"  class="stream-item-name"> 
                 {{stream.name}}
-                <span class="nResults"> 4 </span>
+                <span class="nResults"> {{stream.executionResults. size()}} </span>
             </div>
             
             <div class="result-item" *ngFor="let result of stream.executionResults.contents" 
-                [context-menu]="resultItemMenu" [contextMenuItem]="result">
+                [context-menu]="resultItemMenu" [contextMenuItem]="result"
+                (click)="selectExecutionResult(result, $event)">
                 {{result.getId()}}               
             </div>
         </div>
@@ -42,7 +43,6 @@
         </div>
     </modal-body>
     <modal-footer>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="renameRightClickedStream()">Rename</button>
-        <button type="button" class="btn btn-primary" autofocus (click)="renameStreamModal.close()">Cancel</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="renameStreamModal.close()">Ok</button>
     </modal-footer>
 </modal>

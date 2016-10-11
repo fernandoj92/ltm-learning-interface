@@ -20,6 +20,7 @@ import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 import { IpcService } from './services/ipc/ipc.service';
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
+import { StreamListOutputService } from './stream-list/stream-list-output.service'
 
 @NgModule({
   imports:      [ 
@@ -30,7 +31,8 @@ import { MyContextMenuService } from './contextmenu/contextmenu.service'
   providers:    [ 
     IpcService,
     InMemoryDataService,
-    MyContextMenuService
+    MyContextMenuService, 
+    StreamListOutputService
    ],
    declarations: [ 
     AppComponent,

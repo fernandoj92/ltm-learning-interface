@@ -49,6 +49,10 @@ export class IdCollection <T extends IdElement> {
             this.contents[index] = element
     }
 
+    public size(): number{
+        return this.contents.length;
+    }
+
     private getIndex(element: T): number {
          for (var i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === element.getId())
