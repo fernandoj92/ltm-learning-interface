@@ -1,9 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ExecutionResult } from '../../model/executionResult'
+import { CytoscapeDag } from './model/CytoscapeDag'
 import { StreamListOutputService } from '../../stream-list/stream-list-output.service'
+
 import {Observable} from 'rxjs/Observable'
 
 declare var cytoscape: any;
+
+// TODO: Each updateDagView needs to transform the Dag into a cytoscapeDag, then to a string and then to a JSON object
 
 @Component({
     moduleId: module.id,
@@ -103,8 +107,46 @@ export class TestCytoscapeComponent implements OnInit {
     }
 
 	private newSelectedResultEvent(result: ExecutionResult){
-		if(this.selectedResult === void 0 || this.selectedResult.getId() !== result.getId())
+		if(this.selectedResult === void 0 || this.selectedResult.getId() !== result.getId()){
 			this.selectedResult = result
+			this.updateDagView()
+			console.log('dag view updated')
+		}
 		console.log('selected result: '+ result.getId())
+	}
+
+	private updateDagView(){
+
+		let cy = new cytoscape({
+					container: this.test.nativeElement,
+                    boxSelectionEnabled: false,
+                    autounselectify: true,
+					layout: {
+						name: 'dagre'
+					},
+					style: [
+						{
+							selector: 'node',
+							style: {
+								'content': 'data(id)',
+								'text-opacity': 0.5,
+								'text-valign': 'center',
+								'text-halign': 'right',
+								'background-color': '#11479e'
+							}
+						},
+						{
+							selector: 'edge',
+							style: {
+								'width': 4,
+								'target-arrow-shape': 'triangle',
+								'line-color': '#9dbaea',
+								'target-arrow-color': '#9dbaea',
+								'curve-style': 'bezier'
+							}
+						}
+					],
+					elements: JSON.parse(JSON.stringify(new CytoscapeDag(this.selectedResult.bayesianNetwork.dag))),
+				});
 	}
 }
