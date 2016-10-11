@@ -44,15 +44,14 @@ ul{
   background-color: #e5e5e5;
 }
 
-.contextLink{
+.contextLinkContent{
     padding: 3px 20px;
     cursor: pointer;
-    color: #262626
 }
 
-/* Not working */
-.contextLink :hover{
+.contextLinkContent:hover{
     color: #fff;
     text-decoration: none;
     background-color: #1b95d2;
 }
+
