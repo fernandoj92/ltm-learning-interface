@@ -28,9 +28,9 @@ if(require){
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       // other libraries
       'rxjs':                       'npm:rxjs',
-      'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
       'd3': 'node_modules/d3/d3.min.js',
       'angular2-websocket/angular2-websocket': 'node_modules/angular2-websocket/angular2-websocket.js',
+      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -41,14 +41,13 @@ if(require){
       rxjs: {
         defaultExtension: 'js'
       },
-      'angular2-in-memory-web-api': {
-        main: './index.js',
-        defaultExtension: 'js'
-      },
       "d3": {
         "defaultExtension": "js"
       },
       "ang2-websocket":{
+        "defaultExtension": "js"
+      },
+      'ng2-bs3-modal':{
         "defaultExtension": "js"
       }
     }

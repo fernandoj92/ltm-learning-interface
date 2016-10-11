@@ -6,11 +6,7 @@ import { IContextMenuLinkConfig } from './contextmenu-linkconfig'
 @Component({
   moduleId: module.id,
   selector:'context-menu-holder',
-  styles:[
-    '.container{width:150px;background-color:#eee}',
-    '.link{}','.link:hover{background-color:#abc}',
-    'ul{margin:0px;padding:0px;list-style-type: none}'
-  ],
+  styleUrls: ['contextmenu-holder.component.css'],
   host:{
     '(document:click)':'clickedOutside()'
   },

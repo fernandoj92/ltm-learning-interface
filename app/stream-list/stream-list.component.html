@@ -5,15 +5,44 @@
 
     <div class="stream-list-contents">
         <div class="stream-item" *ngFor="let stream of streams.contents">
-            <div [context-menu]="streamItemMenu" [item]="stream"  class="stream-item-name"> 
-                File Stream 12-12-2016 
+            <div [context-menu]="streamItemMenu" [contextMenuItem]="stream"  class="stream-item-name"> 
+                {{stream.name}}
                 <span class="nResults"> 4 </span>
             </div>
             
             <div class="result-item" *ngFor="let result of stream.executionResults.contents" 
-                [context-menu]="resultItemMenu" [item]="result">
-                 Execution Result 03-11-1996                
+                [context-menu]="resultItemMenu" [contextMenuItem]="result">
+                {{result.getId()}}               
             </div>
         </div>
     </div>
 </div>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #deleteStreamModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Delete Stream</h4>
+    </modal-header>
+    <modal-body>
+        Are you sure you want to delete the stream and all its nested execution results?
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteRightClickedStream()">Delete</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="deleteStreamModal.close()">Cancel</button>
+    </modal-footer>
+</modal>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #renameStreamModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Rename Stream</h4>
+    </modal-header>
+    <modal-body>
+        <div class="form-group">
+            <label for="renameStreamName">Stream name</label>
+            <input type="text" class="form-control" required [(ngModel)]="rightClickedStream.name" name="renameStreamName" id="renameStreamName">
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="renameRightClickedStream()">Rename</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="renameStreamModal.close()">Cancel</button>
+    </modal-footer>
+</modal>

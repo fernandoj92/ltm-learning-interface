@@ -13,12 +13,14 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
 
     <link rel="stylesheet" type="text/css" href="base.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!-- 2. Configure SystemJS -->
     <script src="systemjs.config.js"></script>
-    <!-- 3. My own JS library that I don't know how to propoerly include yet -->
+    <!-- 3. My own JS library that I don't know how to properly include yet -->
     <script src="lib/cytoscape.min.js"></script>
     <script src="lib/dagre.min.js"></script>
     <script src="lib/cytoscape-dagre.js"></script>
+
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
@@ -33,6 +35,11 @@
 <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+
+    // ng2-modal dependencies
+    window.$ = window.jQuery = require('jquery');
+    const bootstrap = require('bootstrap')
+
 </script>
 
 </html>
