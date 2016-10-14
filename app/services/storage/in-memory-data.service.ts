@@ -10,6 +10,7 @@ import * as UUID from '../../util/uuid'
 
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
+import * as moment from 'moment'
  
 @Injectable()
 export class InMemoryDataService extends AbstractNotificationService{
@@ -58,7 +59,7 @@ export class InMemoryDataService extends AbstractNotificationService{
                 let newFileStream =  new Stream(
                     erCollection, 
                     newFileStreamUUID, 
-                    "File Stream "+ newFileStreamUUID,
+                    "File Stream "+  moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
                     streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
@@ -72,7 +73,7 @@ export class InMemoryDataService extends AbstractNotificationService{
                 let newFileStream =  new Stream(
                     erCollection, 
                     newExecutionResult.streamId, 
-                    "File Stream "+ streamCreateDate.format("HH:MM:SS DD-MM-YYYY"),
+                    "File Stream "+ moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
                     streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
