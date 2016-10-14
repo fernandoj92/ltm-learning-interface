@@ -18,6 +18,7 @@ import { ModalWindowTestComponent } from './modal-window-testing/modal-window-te
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
 import { IpcService } from './services/ipc/ipc.service';
+import { IpcOutputService} from './services/ipc/ipc-output.service'
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
 import { StreamListOutputService } from './stream-list/stream-list-output.service'
@@ -31,8 +32,9 @@ import { StreamListOutputService } from './stream-list/stream-list-output.servic
   providers:    [ 
     IpcService,
     InMemoryDataService,
+    IpcOutputService,
     MyContextMenuService, 
-    StreamListOutputService
+    StreamListOutputService,
    ],
    declarations: [ 
     AppComponent,

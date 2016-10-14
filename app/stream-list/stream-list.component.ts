@@ -30,41 +30,65 @@ export class StreamListComponent implements OnInit {
     private memoryEventsSubscription;
 
     // Communication channel with the dag-view and cpt-view components
-    private selectedResult: ExecutionResult
+    private selectedResult: ExecutionResult;
 
     // View properties
     title: string = "Your Streams";
     @Input() streams: IdCollection<Stream>;
 
     // Context menus
-    streamItemMenu: IContextMenuLinkConfig[]
-    resultItemMenu: IContextMenuLinkConfig[]
-    rightClickedStream: Stream
-    rightClickedResult: ExecutionResult
+    streamItemMenu: IContextMenuLinkConfig[];
+    resultItemMenu: IContextMenuLinkConfig[];
+    rightClickedStream: Stream;
+    rightClickedResult: ExecutionResult;
 
     // Modal windows
-    @ViewChild('deleteStreamModal') deleteStreamModal: ModalComponent
-    @ViewChild('renameStreamModal') renameStreamModal: ModalComponent
+    @ViewChild('deleteStreamModal') deleteStreamModal: ModalComponent;
+    @ViewChild('renameStreamModal') renameStreamModal: ModalComponent;
+    @ViewChild('propertiesStreamModal') propertiesStreamModal: ModalComponent;
+    @ViewChild('exportStreamModal') exportStreamModal: ModalComponent;
+    @ViewChild('deleteResultModal') deleteResultModal: ModalComponent;
+    @ViewChild('propertiesResultModal') propertiesResultModal: ModalComponent;
+    @ViewChild('exportResultModal') exportResultModal: ModalComponent;
     // Modal window options
     animation: boolean = true;
     keyboard: boolean = true;
     backdrop: string = 'static';
     cssClass: string = '';
     css: boolean = false;
+    // Modal export forms
+    availableExportFormats: Array<string> =["json"]
+    exportResultForm: ExportResultForm
+    exportStreamForm: ExportStreamForm
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
         private _streamListOutputService: StreamListOutputService,
         private _cdr: ChangeDetectorRef) {
-            
+        
+        // Get the streams' object reference from the memory service
+        this.streams = this._inMemoryDataService.getStreamsReference()
         // Initialization of the rightClickedStream
-        this.rightClickedStream = new Stream(null, 'none', 'none', new Date())
+        this.rightClickedStream = new Stream(new IdCollection<ExecutionResult>(), 'none', 'none', new Date())
         // Initialization of the rightClickedResult
         this.rightClickedResult = new ExecutionResult('none', null, 'none', -1, -1, -1)
+        // Initialization of the  exportResult form
+        this.exportResultForm = new ExportResultForm(this.availableExportFormats[0], false)
+        // Initialization of the  exportStream form
+        this.exportStreamForm = new ExportStreamForm(this.availableExportFormats[0])
+        }
+
+    ngOnInit() {
 
         this.streamItemMenu  = [
             {title:'Rename', click: (item, $event) => {
                     this.renameStreamModal.open();
+                    this.rightClickedStream = item;
+                    this.updateView();
+                }
+            },
+            {title:'Export', click: (item, $event) => {
+                    this.exportStreamModal.open();
                     this.rightClickedStream = item;
                     this.updateView();
                 }
@@ -75,19 +99,34 @@ export class StreamListComponent implements OnInit {
                     this.updateView();
                 }
             },
-            {title:'Run', click: (item, $event) => this.streamRunAction(item, $event)},
-            {title:'Properties', click: (item, $event) => this.streamPropertiesAction(item, $event)}
+            {title:'Properties', click: (item, $event) => {
+                    this.propertiesStreamModal.open();
+                    this.rightClickedStream = item;
+                    this.updateView();
+                }
+            }
         ];
-        this.resultItemMenu = [
-            {title:'Export', click: (item, $event) => this.resultExportAction(item, $event)},
-            {title:'Delete', click: (item, $event) => this.resultmDeleteAction(item, $event)},
-            {title:'Properties', click: (item, $event) => this.resultPropertiesAction(item, $event)}
-        ];
-        }
 
-    ngOnInit() {
-        // Get the streams' object reference from the memory service
-        this.streams = this._inMemoryDataService.getStreamsReference()
+        this.resultItemMenu = [
+            {title:'Export', click: (item, $event) => {
+                    this.exportResultModal.open();
+                    this.rightClickedResult = item;
+                    this.updateView();
+                }
+            },
+            {title:'Delete', click: (item, $event) => {
+                    this.deleteResultModal.open();
+                    this.rightClickedResult = item;
+                    this.updateView();
+                }
+            },
+            {title:'Properties', click: (item, $event) => {
+                    this.propertiesResultModal.open();
+                    this.rightClickedResult = item;
+                    this.updateView();
+                }
+            }
+        ];
 
         // Subscribe to the memory event emitter to know when a change in the model has ocurred (update the view)
         this.memoryEvents = this._inMemoryDataService.getStreamsEventEmitter()
@@ -102,7 +141,7 @@ export class StreamListComponent implements OnInit {
          this.streams.remove(streamId)
          this._streamListOutputService.deleteStreamEvent(streamId)
          // Not neccesary to update the view because it will generate a memory event????????
-          this.updateView()
+         this.updateView()
     }
 
     renameRightClickedStream(){
@@ -115,11 +154,18 @@ export class StreamListComponent implements OnInit {
         this._streamListOutputService.selectResultEvent(this.selectedResult)
     }
 
-    deleteRightClickedExecutionResult(){
-        let resultId = this.rightClickedResult.streamId
-        this.streams.get(resultId).remove(this.rightClickedResult)
+    deleteRightClickedResult(){
+        let resultId = this.rightClickedResult.getId()
+        this.streams.get(this.rightClickedResult.streamId).remove(this.rightClickedResult)
         // Avisar correctamente a los componentes relaccionados
         this._streamListOutputService.deleteResultEvent(resultId)
+    }
+
+    exportRightClickedResult(){
+        this._inMemoryDataService.exportExecutionResult(
+            ExecutionResult.copy(this.rightClickedResult), 
+            this.exportResultForm.format, 
+            this.exportResultForm.includeStreamId);
     }
 
     private updateView(){
@@ -127,37 +173,27 @@ export class StreamListComponent implements OnInit {
         this._cdr.detectChanges(); 
      }
 
-     private newMemoryEvent = (msg) => {
+    private newMemoryEvent = (msg) => {
         // Update the view to show the memory update
         console.log("newMemoryEvent received: "+ msg)
         this.updateView()
-     }
+    }
+}
 
-     private streamRenameAction = (stream: Stream, $event?: MouseEvent) => {
-        alert("streamRenameAction sobre "+ stream.getId())
-     }
+class ExportStreamForm{
+    format: string
 
-     /*private streamDeleteAction = (stream: Stream, $event?: MouseEvent) => {
-         this.deleteStreamModal.open()
-     }*/
+    constructor(format: string){
+        this.format = format;
+    }
+}
 
-     private streamRunAction = (stream: Stream, $event?: MouseEvent) => {
-         
-     }
+class ExportResultForm{
+    format: string
+    includeStreamId: boolean
 
-     private streamPropertiesAction = (stream: Stream, $event?: MouseEvent) => {
-         
-     }
-
-     private resultExportAction = (result: ExecutionResult, $event?: MouseEvent) => {
-         alert("resultExportAction sobre "+ result.getId())
-     }
-
-     private resultmDeleteAction = (result: ExecutionResult, $event?: MouseEvent) => {
-         
-     }
-
-     private resultPropertiesAction = (result: ExecutionResult, $event?: MouseEvent) => {
-
-     }
+    constructor(format: string, includeStreamId: boolean){
+        this.format = format
+        this.includeStreamId = includeStreamId
+    }
 }

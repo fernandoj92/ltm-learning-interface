@@ -16,7 +16,11 @@ import * as moment from 'moment'
 export class InMemoryDataService extends AbstractNotificationService{
 
     private streams: IdCollection<Stream>;
+    // Event emitters
     private streamsEventEmitter: Subject<string>;
+    private ipcExportExecutionResultEventEmitter: Subject<ExecutionResult>
+    private ipcExportStreamEventEmitter: Subject<Stream>
+    // Event receivers
     private ipcLoadExecutionResultEvents: Observable<JsonExecutionResult>;
     private ipcLoadExecutionResultEventsSubscription;
 
@@ -26,7 +30,7 @@ export class InMemoryDataService extends AbstractNotificationService{
         this.ipcLoadExecutionResultEvents =  this._ipcService.getLoadExecutionResultEvents()
         this.ipcLoadExecutionResultEventsSubscription =  this.ipcLoadExecutionResultEvents
         .subscribe(
-            (executionResultJson) => this.loadERinMemory(executionResultJson),
+            (executionResultJson) => this.loadResultInMemory(executionResultJson),
             (error) => this.notifyMsg('IPC loadExecutionResult event error')
         )
     }
@@ -40,7 +44,30 @@ export class InMemoryDataService extends AbstractNotificationService{
        return this.streamsEventEmitter.asObservable()
     }
 
-    private loadERinMemory = (executionResultJson: JsonExecutionResult): void =>{
+    public getExportExecutionResultEvents(): Observable<ExecutionResult>{
+        if(!this.ipcExportExecutionResultEventEmitter)
+            this.ipcExportExecutionResultEventEmitter= new Subject<ExecutionResult>();
+
+        return this.ipcExportExecutionResultEventEmitter.asObservable();
+    }
+
+    public getExportStreamEvents(): Observable<Stream>{
+        if(!this.ipcExportStreamEventEmitter)
+            this.ipcExportStreamEventEmitter = new Subject<Stream>();
+            
+        return this.ipcExportStreamEventEmitter.asObservable();
+    }
+
+    public exportExecutionResult(executionResultCopy: ExecutionResult, fileFormat: string, includeStreamId: boolean){
+        if(includeStreamId === false)
+            executionResultCopy.streamId = ""
+
+        this.notifyMsg("exportExecutionResult: "+ "format: "+ fileFormat + ", includeStreamId: "+ includeStreamId)
+
+        // Send an IPC export message to the electron base
+    }
+
+    private loadResultInMemory = (executionResultJson: JsonExecutionResult): void =>{
         try {
             // Test notification message
             this.notifyMsg('IPC loadExecutionResult event succesfully received')

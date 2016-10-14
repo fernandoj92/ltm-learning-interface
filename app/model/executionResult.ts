@@ -39,4 +39,15 @@ export class ExecutionResult extends IdElement{
             json.nanoFinish
         );
     }
+
+    public static copy(result: ExecutionResult): ExecutionResult {
+        return new ExecutionResult(
+            result.streamId,
+            result.bayesianNetwork,
+            result.algorithm,
+            result.index,
+            result.nanoStart,
+            result.nanoFinish
+        );
+    }
 }

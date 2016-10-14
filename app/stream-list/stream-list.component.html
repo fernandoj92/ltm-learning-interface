@@ -19,6 +19,8 @@
     </div>
 </div>
 
+<!-- =================   STREAM MODALS   ================= !-->
+
 <modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #deleteStreamModal  >
     <modal-header [show-close]="true">
         <h4 class="modal-title">Delete Stream</h4>
@@ -44,5 +46,81 @@
     </modal-body>
     <modal-footer>
         <button type="button" class="btn btn-primary" autofocus (click)="renameStreamModal.close()">Ok</button>
+    </modal-footer>
+</modal>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #propertiesStreamModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Stream properties</h4>
+    </modal-header>
+    <modal-body>
+        <p>Input: File</p>
+        <p>Date: {{rightClickedStream.createDate}} </p>
+        <p>Number of results: {{rightClickedStream.executionResults.size()}}</p>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" autofocus (click)="propertiesStreamModal.close()">Ok</button>
+    </modal-footer>
+</modal>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #exportStreamModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Export Stream</h4>
+    </modal-header>
+    <modal-body>
+        <p>Input: File</p>
+        <p>Date: {{rightClickedStream.createDate}} </p>
+        <p>Number of results: {{rightClickedStream.executionResults.size()}}</p>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" autofocus (click)="exportStreamModal.close()">Ok</button>
+    </modal-footer>
+</modal>
+
+<!-- =================   EXECUTION RESULT MODALS   ================= !-->
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #deleteResultModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Delete Execution Result</h4>
+    </modal-header>
+    <modal-body>
+        Are you sure you want to delete the execution result?
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteRightClickedResult()">Delete</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="deleteResultModal.close()">Cancel</button>
+    </modal-footer>
+</modal>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #propertiesResultModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Execution Result properties</h4>
+    </modal-header>
+    <modal-body>
+        <p>Algorithm: {{rightClickedResult.algorithm}}</p>
+        <p>Execution time (ms): {{rightClickedResult.nanoFinish - rightClickedResult.nanoStart}} </p>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" autofocus (click)="propertiesResultModal.close()">Ok</button>
+    </modal-footer>
+</modal>
+
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #exportResultModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Export Execution Result</h4>
+    </modal-header>
+    <modal-body>
+        <div class="form-group">
+            <label for="format">Export format</label>
+            <select class="form-control" required [(ngModel)]="exportResultForm.format" id="format" name="format">
+                <option *ngFor="let format of availableExportFormats" [value]="format">{{format}}</option>
+            </select>
+            <label for="format">Include stream ID</label>
+            <input type="checkbox" [(ngModel)]="exportResultForm.includeStreamId" />
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="exportRightClickedResult()">Export</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="exportResultModal.close()">Cancel</button>
     </modal-footer>
 </modal>

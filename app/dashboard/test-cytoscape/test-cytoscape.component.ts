@@ -68,7 +68,8 @@ export class TestCytoscapeComponent implements OnInit {
 	private newDeletedResultEvent(resultId: string){
 		if(this.selectedResult === void 0 || this.selectedResult.getId() === resultId){
 			this.dagLoaded = false
-			this.cyDag.destroy()
+			if(this.cyDag !== void 0)
+				this.cyDag.destroy()
 		}
 			
 	}
@@ -76,7 +77,8 @@ export class TestCytoscapeComponent implements OnInit {
 	private newDeletedStreamEvent(streamId: string){
 		if(this.selectedResult === void 0 || this.selectedResult.streamId === streamId){
 			this.dagLoaded = false
-			this.cyDag.destroy()
+			if(this.cyDag !== void 0)
+				this.cyDag.destroy()
 		}
 			
 	}
