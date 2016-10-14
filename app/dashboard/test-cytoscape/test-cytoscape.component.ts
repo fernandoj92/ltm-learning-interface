@@ -26,6 +26,8 @@ export class TestCytoscapeComponent implements OnInit {
 	private streamListEventsSubscription;
 	private selectedResult: ExecutionResult;
 
+	private cyDag
+
     constructor(private _streamListOutputService: StreamListOutputService,
 				private eltRef:ElementRef) {
 		this.selectedResult = void 0;
@@ -64,16 +66,24 @@ export class TestCytoscapeComponent implements OnInit {
 	}
 
 	private newDeletedResultEvent(resultId: string){
-
+		if(this.selectedResult === void 0 || this.selectedResult.getId() === resultId){
+			this.dagLoaded = false
+			this.cyDag.destroy()
+		}
+			
 	}
 
 	private newDeletedStreamEvent(streamId: string){
-
+		if(this.selectedResult === void 0 || this.selectedResult.streamId === streamId){
+			this.dagLoaded = false
+			this.cyDag.destroy()
+		}
+			
 	}
 
 	private updateDagView(){
 
-		let cy = new cytoscape({
+		this.cyDag = new cytoscape({
 					container: this.test.nativeElement,
                     boxSelectionEnabled: false,
                     autounselectify: true,

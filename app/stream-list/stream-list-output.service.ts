@@ -20,7 +20,6 @@ export class StreamListOutputService {
         this.streamListEventEmitter.next(
             new StreamListEvent( StreamListEventType.EXECUTION_RESULT_SELECTED, result)
         )
-        //this.selectedResultEventEmitter.next(result)
     }
 
     public deleteResultEvent(resultId: string): void {
