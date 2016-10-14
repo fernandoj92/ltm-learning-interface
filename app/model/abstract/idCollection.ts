@@ -1,4 +1,4 @@
-import { IdElement } from './IdElement'
+import { IdElement } from './idElement'
 
 export class IdCollection <T extends IdElement> {
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ExecutionResult } from '../../model/executionResult'
-import { CytoscapeDag } from './model/CytoscapeDag'
+import { CytoscapeDag } from './model/cytoscapeDag'
 import { StreamListOutputService, StreamListEvent, StreamListEventType } from '../../stream-list/stream-list-output.service'
 
 import {Observable} from 'rxjs/Observable'

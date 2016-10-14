@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy, ViewChild, ViewEncapsulation } from '@angular/core';
 
 // Utils
-import { IdCollection } from '../model/abstract/IdCollection'
+import { IdCollection } from '../model/abstract/idCollection'
 import * as UUID from '../util/uuid' 
 import { IContextMenuLinkConfig } from '../contextmenu/contextmenu-linkconfig'
 // Model

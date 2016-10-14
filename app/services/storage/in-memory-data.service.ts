@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { IdCollection } from '../../model/abstract/idCollection'
 import { Stream } from '../../model/stream'
-import { ExecutionResult, JsonExecutionResult } from '../../model/ExecutionResult'
+import { ExecutionResult, JsonExecutionResult } from '../../model/executionResult'
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
 import { IpcService } from '../ipc/ipc.service'
-import * as JsonTransform from '../../util/JsonTransform'
+import * as JsonTransform from '../../util/jsonTransform'
 import * as UUID from '../../util/uuid'
 
 import {Subject} from 'rxjs/Subject'

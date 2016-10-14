@@ -1,5 +1,5 @@
-import { IdElement } from './abstract/IdElement'
-import { IdCollection } from './abstract/IdCollection'
+import { IdElement } from './abstract/idElement'
+import { IdCollection } from './abstract/idCollection'
 import { ExecutionResult } from './executionResult'
 
 export class Stream extends IdElement{

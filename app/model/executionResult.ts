@@ -1,4 +1,4 @@
-import { IdElement } from './abstract/IdElement'
+import { IdElement } from './abstract/idElement'
 import { JsonBayesianNetwork, BayesianNetwork } from './bayesianNetwork/bayesianNetwork'
 import * as UUID from '../util/uuid'
 

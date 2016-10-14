@@ -4,7 +4,7 @@ import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
-import { ExecutionResult, JsonExecutionResult } from '../../model/ExecutionResult'
+import { ExecutionResult, JsonExecutionResult } from '../../model/executionResult'
 
 import { remote, ipcRenderer } from 'electron';
 
