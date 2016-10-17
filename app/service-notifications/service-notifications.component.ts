@@ -23,7 +23,8 @@ export class ServiceNotificationsComponent implements OnInit {
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
-        private _ipcInputService: IpcInputService) { }
+        private _ipcInputService: IpcInputService, 
+        private _ipcOutputService: IpcOutputService) { }
 
     ngOnInit() {
 
@@ -33,15 +34,23 @@ export class ServiceNotificationsComponent implements OnInit {
             (msg) => { this.logMessageFunc(this._inMemoryDataService.name(), msg) },
             (err) => { this.logErrorFunc(this._inMemoryDataService.name(), err) },
             ()    => { this.logCompletedFunc(this._inMemoryDataService.name())}
-        )
+        );
 
-        // IpcService
+        // IpcInputService
         this.ipcServiceNotifications = this._ipcInputService.getNotificationGenerator()
         this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
             (msg) => { this.logMessageFunc(this._ipcInputService.name(), msg) },
             (err) => { this.logErrorFunc(this._ipcInputService.name(), err) },
             ()    => { this.logCompletedFunc(this._ipcInputService.name())}
-        )
+        );
+
+        // IpcOutputService
+        this.ipcServiceNotifications = this._ipcOutputService.getNotificationGenerator()
+        this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
+            (msg) => { this.logMessageFunc(this._ipcOutputService.name(), msg) },
+            (err) => { this.logErrorFunc(this._ipcOutputService.name(), err) },
+            ()    => { this.logCompletedFunc(this._ipcOutputService.name())}
+        );
         
      }
 

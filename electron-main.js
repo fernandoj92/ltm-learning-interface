@@ -76,6 +76,9 @@ let setApplicationMenu = () => {
               return;
           let fileName = fileNames[0];
           fs.readFile(fileName, 'utf-8', function (err, fileData) {
+              if(err)
+                console.log("An error ocurred loading the file "+ err.message)
+
               try{
                   var jsonContent = JSON.parse(fileData);
                   mainWindow.webContents.send('load-ExecutionResult', jsonContent); 
@@ -96,8 +99,24 @@ let setApplicationMenu = () => {
 // ============================= IPC Main Event Handler =============================
 
 ipcMain.on('export-ExecutionResult', (event, fileOutExecutionResult) => {
-  console.log("export-ExecutionResult recibido")
-  console.log(JSON.stringify(fileOutExecutionResult));  // prints "the json of the fileOutExecutionResult"
+  console.log("export-ExecutionResult received")
+
+  electron.dialog.showSaveDialog({ 
+        title: 'Save the Execution result'
+      }, function(fileName){
+
+            if (fileName === undefined){
+               console.log("You didn't save the file");
+               return;
+            }
+
+            fs.writeFile(fileName+"."+fileOutExecutionResult.fileFormat, JSON.stringify(fileOutExecutionResult.executionResult), function (err) {
+              if(err)
+                  console.log("An error ocurred creating the file "+ err.message);
+              else         
+                console.log("The file has been succesfully saved");
+            });
+  });
 })
 
 // ==================================    APP    =====================================

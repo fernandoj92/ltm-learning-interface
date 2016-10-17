@@ -55,10 +55,10 @@ export class ExecutionResult extends IdElement{
 export class FileOutExecutionResult{
 
     executionResult: ExecutionResult;
-    fileformat: string;
+    fileFormat: string;
 
     constructor(executionResult: ExecutionResult, fileFormat: string){
         this.executionResult = executionResult;
-        this.fileformat = fileFormat;
+        this.fileFormat = fileFormat;
     }
 }

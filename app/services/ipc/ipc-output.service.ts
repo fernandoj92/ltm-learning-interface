@@ -21,12 +21,11 @@ export class IpcOutputService extends AbstractNotificationService{
 
     constructor(private _inMemoryDataService: InMemoryDataService) {
         super("IPC-output Service")
-        this.notifyMsg("ipc_output creado")
         // Export ER events
         this.exportExecutionResultEvents =  this._inMemoryDataService.getExportExecutionResultEvents();
         this.exportExecutionResultEventsSubscription =  this.exportExecutionResultEvents
         .subscribe(
-            (fileOutExecutionResult) => this.notifyMsg("fileOutExecutionResult received"), //this.sendIpcExportExecutionResult(fileOutExecutionResult),
+            (fileOutExecutionResult) => this.sendIpcExportExecutionResult(fileOutExecutionResult),
             (error) => this.notifyMsg('IPC exportExecutionResult event error')
         );
 
