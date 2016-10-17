@@ -7,6 +7,7 @@ const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
+const ipcMain = electron.ipcMain
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -76,10 +77,9 @@ let setApplicationMenu = () => {
           let fileName = fileNames[0];
           fs.readFile(fileName, 'utf-8', function (err, fileData) {
               try{
-                  console.log(fileData)
                   var jsonContent = JSON.parse(fileData);
-                  console.log("Enviando load-ExecutionResult")
                   mainWindow.webContents.send('load-ExecutionResult', jsonContent); 
+                  console.log("load-ExecutionResult sent")
               }catch(e){
                   console.log(e); //There was an error while parsing
                   // TODO: instead of logging, send notification to the Angular 2 notification manager component
@@ -92,6 +92,15 @@ let setApplicationMenu = () => {
   menu = Menu.buildFromTemplate(menus)
   Menu.setApplicationMenu(menu);
 }
+
+// ============================= IPC Main Event Handler =============================
+
+ipcMain.on('export-ExecutionResult', (event, fileOutExecutionResult) => {
+  console.log("export-ExecutionResult recibido")
+  console.log(JSON.stringify(fileOutExecutionResult));  // prints "the json of the fileOutExecutionResult"
+})
+
+// ==================================    APP    =====================================
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -119,6 +128,3 @@ app.on('activate', function () {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

@@ -17,8 +17,10 @@ export class IpcInputService extends AbstractNotificationService{
 
     constructor() {
         super("IPC-input Service")
+        this.loadExecutionResultEventsEmitter = new Subject<JsonExecutionResult>();
+        // ===== ipc messages =====
 
-        // loadExecutionResult
+        //  loadExecutionResult
         ipcRenderer.on('load-ExecutionResult', this.loadExecutionResult); 
     }
 
@@ -29,9 +31,6 @@ export class IpcInputService extends AbstractNotificationService{
     }
 
     public getLoadExecutionResultEvents(): Observable<JsonExecutionResult>{
-        if(!this.loadExecutionResultEventsEmitter)
-            this.loadExecutionResultEventsEmitter = new Subject<JsonExecutionResult>();
-
         return this.loadExecutionResultEventsEmitter.asObservable()
     }
 }

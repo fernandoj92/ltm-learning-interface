@@ -4,7 +4,8 @@ import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 
 import { InMemoryDataService } from '../services/storage/in-memory-data.service'
-import { IpcService } from '../services/ipc/ipc.service'
+import { IpcInputService } from '../services/ipc/ipc-input.service'
+import { IpcOutputService } from '../services/ipc/ipc-output.service'
 
 @Component({
     moduleId: module.id,
@@ -22,7 +23,7 @@ export class ServiceNotificationsComponent implements OnInit {
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
-        private _ipcService: IpcService) { }
+        private _ipcInputService: IpcInputService) { }
 
     ngOnInit() {
 
@@ -35,11 +36,11 @@ export class ServiceNotificationsComponent implements OnInit {
         )
 
         // IpcService
-        this.ipcServiceNotifications = this._ipcService.getNotificationGenerator()
+        this.ipcServiceNotifications = this._ipcInputService.getNotificationGenerator()
         this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
-            (msg) => { this.logMessageFunc(this._ipcService.name(), msg) },
-            (err) => { this.logErrorFunc(this._ipcService.name(), err) },
-            ()    => { this.logCompletedFunc(this._ipcService.name())}
+            (msg) => { this.logMessageFunc(this._ipcInputService.name(), msg) },
+            (err) => { this.logErrorFunc(this._ipcInputService.name(), err) },
+            ()    => { this.logCompletedFunc(this._ipcInputService.name())}
         )
         
      }

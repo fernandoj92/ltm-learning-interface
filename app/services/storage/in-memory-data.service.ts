@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { IdCollection } from '../../model/abstract/idCollection'
 import { Stream } from '../../model/stream'
-import { ExecutionResult, JsonExecutionResult } from '../../model/executionResult'
+import { ExecutionResult, JsonExecutionResult, FileOutExecutionResult } from '../../model/executionResult'
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
-import { IpcService } from '../ipc/ipc.service'
+import { IpcInputService } from '../ipc/ipc-input.service'
 import * as JsonTransform from '../../util/jsonTransform'
 import * as UUID from '../../util/uuid'
 
@@ -18,16 +18,21 @@ export class InMemoryDataService extends AbstractNotificationService{
     private streams: IdCollection<Stream>;
     // Event emitters
     private streamsEventEmitter: Subject<string>;
-    private ipcExportExecutionResultEventEmitter: Subject<ExecutionResult>
+    private ipcExportExecutionResultEventEmitter: Subject<FileOutExecutionResult>
     private ipcExportStreamEventEmitter: Subject<Stream>
     // Event receivers
     private ipcLoadExecutionResultEvents: Observable<JsonExecutionResult>;
     private ipcLoadExecutionResultEventsSubscription;
 
-    constructor(private _ipcService: IpcService){
+    constructor(private _ipcInputService: IpcInputService){
         super('InMemoryDataService')
         this.streams =  new IdCollection<Stream>();
-        this.ipcLoadExecutionResultEvents =  this._ipcService.getLoadExecutionResultEvents()
+
+        this.streamsEventEmitter = new Subject<string>();
+        this.ipcExportExecutionResultEventEmitter = new Subject<FileOutExecutionResult>();
+        this.ipcExportStreamEventEmitter = new Subject<Stream>();
+
+        this.ipcLoadExecutionResultEvents =  this._ipcInputService.getLoadExecutionResultEvents()
         this.ipcLoadExecutionResultEventsSubscription =  this.ipcLoadExecutionResultEvents
         .subscribe(
             (executionResultJson) => this.loadResultInMemory(executionResultJson),
@@ -38,23 +43,14 @@ export class InMemoryDataService extends AbstractNotificationService{
     public getStreamsReference(): IdCollection<Stream> { return this.streams }
 
     public getStreamsEventEmitter(): Observable<string> {
-       if(!this.streamsEventEmitter)
-            this.streamsEventEmitter = new Subject<string>();
-
        return this.streamsEventEmitter.asObservable()
     }
 
-    public getExportExecutionResultEvents(): Observable<ExecutionResult>{
-        if(!this.ipcExportExecutionResultEventEmitter)
-            this.ipcExportExecutionResultEventEmitter= new Subject<ExecutionResult>();
-
+    public getExportExecutionResultEvents(): Observable<FileOutExecutionResult>{
         return this.ipcExportExecutionResultEventEmitter.asObservable();
     }
 
-    public getExportStreamEvents(): Observable<Stream>{
-        if(!this.ipcExportStreamEventEmitter)
-            this.ipcExportStreamEventEmitter = new Subject<Stream>();
-            
+    public getExportStreamEvents(): Observable<Stream>{            
         return this.ipcExportStreamEventEmitter.asObservable();
     }
 
@@ -62,9 +58,14 @@ export class InMemoryDataService extends AbstractNotificationService{
         if(includeStreamId === false)
             executionResultCopy.streamId = ""
 
-        this.notifyMsg("exportExecutionResult: "+ "format: "+ fileFormat + ", includeStreamId: "+ includeStreamId)
-
         // Send an IPC export message to the electron base
+        let fileOutExecutionResult = new FileOutExecutionResult(executionResultCopy, fileFormat)
+        console.log(fileOutExecutionResult)
+        this.ipcExportExecutionResultEventEmitter.next(fileOutExecutionResult)
+    }
+
+    public exportStream(streamCopy: Stream, fileFormat: string){
+        // TODO: junto con el import
     }
 
     private loadResultInMemory = (executionResultJson: JsonExecutionResult): void =>{

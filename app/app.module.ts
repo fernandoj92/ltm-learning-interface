@@ -17,7 +17,7 @@ import { ModalWindowTestComponent } from './modal-window-testing/modal-window-te
 // Directives
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
-import { IpcService } from './services/ipc/ipc.service';
+import { IpcInputService } from './services/ipc/ipc-input.service';
 import { IpcOutputService} from './services/ipc/ipc-output.service'
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
@@ -30,9 +30,9 @@ import { StreamListOutputService } from './stream-list/stream-list-output.servic
     Ng2Bs3ModalModule
   ],
   providers:    [ 
-    IpcService,
-    InMemoryDataService,
+    IpcInputService,
     IpcOutputService,
+    InMemoryDataService,
     MyContextMenuService, 
     StreamListOutputService,
    ],
