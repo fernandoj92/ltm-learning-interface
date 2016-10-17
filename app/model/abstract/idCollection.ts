@@ -14,7 +14,7 @@ export class IdCollection <T extends IdElement> {
     }
 
     public containsId(_id: string): boolean {
-        for (var i = 0; i < this.contents.length; i++) 
+        for (let i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === _id)
                 return true;
 
@@ -22,7 +22,7 @@ export class IdCollection <T extends IdElement> {
     }
 
     public get(_id: string): T {
-        for (var i = 0; i < this.contents.length; i++) 
+        for (let i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === _id)
                 return this.contents[i];
 
@@ -30,7 +30,7 @@ export class IdCollection <T extends IdElement> {
     }
 
     public remove(_id: string): boolean {
-        for (var i = 0; i < this.contents.length; i++) 
+        for (let i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === _id){
                 this.contents.splice(i, 1)
                 return true;
@@ -54,7 +54,7 @@ export class IdCollection <T extends IdElement> {
     }
 
     private getIndex(element: T): number {
-         for (var i = 0; i < this.contents.length; i++) 
+         for (let i = 0; i < this.contents.length; i++) 
             if(this.contents[i].getId() === element.getId())
                 return i;
         return -1;

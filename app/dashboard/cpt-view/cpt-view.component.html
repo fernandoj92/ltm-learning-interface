@@ -1,0 +1,31 @@
+<div class="noCptLoaded" *ngIf="cptsLoaded === false">
+    No contents
+</div>
+
+<div class="cpts" *ngIf="cptsLoaded === true">
+    <ul class="nav nav-tabs">
+        <li role="presentation" 
+        *ngFor="let cpt of selectedResult.bayesianNetwork.cpts"
+        [ngClass]="{'active': isCptSelected(cpt) }"
+        (click)="selectCpt(cpt, $event)">
+            <a href="#">{{cpt.variableID}}</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div
+        *ngFor="let cpt of selectedResult.bayesianNetwork.cpts" 
+        [ngClass]="{'tab-pane': true, 'active': isCptSelected(cpt)}">
+            <p>Type: {{cpt.label}} </p>
+             <table class="table">
+                 <thead>
+                    <tr>
+                        <th>Parent variable's' value</th>
+                        <th *ngFor="let "></th>
+                        <!-- TODO (primero modificar la generacion de Json en el ltm-learning server)-->
+                    </tr>
+                </thead>
+             </table>
+        </div>
+    </div>
+</div>

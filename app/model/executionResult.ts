@@ -30,9 +30,12 @@ export class ExecutionResult extends IdElement{
     }
 
     public static construct(json: JsonExecutionResult): ExecutionResult{
+
+        let modifiedBn = BayesianNetwork.construct(json.bayesianNetwork.dag, json.bayesianNetwork.cpts) 
+
         return new ExecutionResult(
             json.streamId,
-            json.bayesianNetwork,
+            modifiedBn,
             json.algorithm,
             json.index,
             json.nanoStart,
