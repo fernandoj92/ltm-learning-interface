@@ -9,7 +9,8 @@ import {Observable} from 'rxjs/Observable'
 @Component({
     moduleId: module.id,
     selector: 'cpt-view',
-    templateUrl: 'cpt-view.component.html'
+    templateUrl: 'cpt-view.component.html',
+	styleUrls: ['cpt-view.component.css']
 })
 export class CptViewComponent implements OnInit {
 
