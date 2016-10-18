@@ -1,4 +1,5 @@
 const fileMenu = require('./electron-app/menu/file_menu_template');
+const runMenu = require('./electron-app/menu/run_menu_template');
 const editMenu = require('./electron-app/menu/edit_menu_template');
 const devMenu =  require('./electron-app/menu/dev_menu_template');
 
@@ -35,12 +36,15 @@ let createWindow = () => {
 let setApplicationMenu = () => {
 
   let menus = [
-    fileMenu.template, 
+    fileMenu.template,
+    runMenu.template, 
     editMenu.template, 
     //devMenu.template
   ];
 
   // Functionalities
+ 
+ // ===== File menu ===== 
   menus[0].submenu
     .find(item => item.label === 'Open')
     .click = () => {
@@ -91,7 +95,20 @@ let setApplicationMenu = () => {
       }); // showOpenDialog
 
     } // Open file click()
-
+  
+  // ===== Run menu ===== 
+  menus[1].find(item => item.label === 'Approximate Bridged Islands')
+    .click = () => {
+      console.log("ABI - click called")
+      mainWindow.webContents.send('run-abi');
+    }
+  
+  menus[1].find(item => item.label === 'SALL')
+    .click = () => {
+      console.log("SALL - click called")
+      mainWindow.webContents.send('run-sall');
+    }
+  // Create previously defined menus
   menu = Menu.buildFromTemplate(menus)
   Menu.setApplicationMenu(menu);
 }
