@@ -20,11 +20,22 @@
              <table class="table">
                  <thead>
                     <tr>
-                        <th>Parent variable's' value</th>
-                        <th *ngFor="let "></th>
-                        <!-- TODO (primero modificar la generacion de Json en el ltm-learning server)-->
+                        <th>Parent's assignment</th>
+                        <th *ngFor="let param of cpt.rows[0].parameters">
+                            {{param.parameter}}
+                        </th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr *ngFor="let row of cpt.rows">
+                        <td>
+                            <span *ngFor="let assignment of row.parentAssignments">{{assignment.parent}} = {{assignment.value}}</span>
+                        </td>
+                        <td *ngFor="let param of row.parameters">
+                            {{param.value}}
+                        </td>
+                    </tr>
+                </tbody>
              </table>
         </div>
     </div>

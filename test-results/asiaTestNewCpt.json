@@ -45,36 +45,36 @@
       ],
       "edges": [
         {
-          "source": "0",
-          "target": "9"
+          "source": "9",
+          "target": "0"
         },
         {
-          "source": "1",
-          "target": "9"
+          "source": "9",
+          "target": "1"
         },
         {
-          "source": "2",
-          "target": "9"
+          "source": "9",
+          "target": "2"
         },
         {
-          "source": "3",
-          "target": "9"
+          "source": "9",
+          "target": "3"
         },
         {
-          "source": "4",
-          "target": "8"
+          "source": "8",
+          "target": "4"
         },
         {
-          "source": "5",
-          "target": "9"
+          "source": "9",
+          "target": "5"
         },
         {
-          "source": "6",
-          "target": "8"
+          "source": "8",
+          "target": "6"
         },
         {
-          "source": "7",
-          "target": "8"
+          "source": "8",
+          "target": "7"
         },
         {
           "source": "9",
@@ -93,36 +93,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.7437366895856432
+                "parameter": "s0",
+                "value": 0.737456234042943
               },
               {
-                "parameter": "s2",
-                "value": 0.25626331041435685
+                "parameter": "s1",
+                "value": 0.26254376595705703
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.970063604670123
+                "parameter": "s0",
+                "value": 0.9701179608918045
               },
               {
-                "parameter": "s2",
-                "value": 0.029936395329876932
+                "parameter": "s1",
+                "value": 0.029882039108195556
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -138,36 +138,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.6171703596895226
+                "parameter": "s0",
+                "value": 0.6083033358406288
               },
               {
-                "parameter": "s2",
-                "value": 0.38282964031047745
+                "parameter": "s1",
+                "value": 0.39169666415937127
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.9799252137970663
+                "parameter": "s0",
+                "value": 0.9799213074512212
               },
               {
-                "parameter": "s2",
-                "value": 0.0200747862029336
+                "parameter": "s1",
+                "value": 0.02007869254877886
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -183,36 +183,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.27693082687606413
+                "parameter": "s0",
+                "value": 0.27738132799325727
               },
               {
-                "parameter": "s2",
-                "value": 0.7230691731239358
+                "parameter": "s1",
+                "value": 0.7226186720067427
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.5772650273368177
+                "parameter": "s0",
+                "value": 0.5766703612985862
               },
               {
-                "parameter": "s2",
-                "value": 0.42273497266318233
+                "parameter": "s1",
+                "value": 0.4233296387014138
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -228,36 +228,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.4888576716722957
+                "parameter": "s0",
+                "value": 0.476710796692702
               },
               {
-                "parameter": "s2",
-                "value": 0.5111423283277043
+                "parameter": "s1",
+                "value": 0.523289203307298
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.9799421844845637
+                "parameter": "s0",
+                "value": 0.979947751843924
               },
               {
-                "parameter": "s2",
-                "value": 0.020057815515436273
+                "parameter": "s1",
+                "value": 0.020052248156075963
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -273,36 +273,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.9706427927942703
+                "parameter": "s0",
+                "value": 0.9705827493291125
               },
               {
-                "parameter": "s2",
-                "value": 0.02935720720572968
+                "parameter": "s1",
+                "value": 0.029417250670887567
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.8745862504695976
+                "parameter": "s0",
+                "value": 0.8750221680132984
               },
               {
-                "parameter": "s2",
-                "value": 0.12541374953040244
+                "parameter": "s1",
+                "value": 0.12497783198670175
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -318,36 +318,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.27576352206266613
+                "parameter": "s0",
+                "value": 0.2765959014486883
               },
               {
-                "parameter": "s2",
-                "value": 0.7242364779373339
+                "parameter": "s1",
+                "value": 0.7234040985513118
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.946642197980448
+                "parameter": "s0",
+                "value": 0.9453270513240869
               },
               {
-                "parameter": "s2",
-                "value": 0.05335780201955197
+                "parameter": "s1",
+                "value": 0.05467294867591311
               }
             ],
             "parentAssignments": [
               {
                 "parent": "9",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -363,36 +363,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.840772372396956
+                "parameter": "s0",
+                "value": 0.8420920155106819
               },
               {
-                "parameter": "s2",
-                "value": 0.159227627603044
+                "parameter": "s1",
+                "value": 0.15790798448931798
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.06810486643655261
+                "parameter": "s0",
+                "value": 0.06854752611719678
               },
               {
-                "parameter": "s2",
-                "value": 0.9318951335634473
+                "parameter": "s1",
+                "value": 0.9314524738828032
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 1.0
+                "value": "s1"
               }
             ]
           }
@@ -408,55 +408,36 @@
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.945845154677176
+                "parameter": "s0",
+                "value": 0.9462380577898523
               },
               {
-                "parameter": "s2",
-                "value": 0.05415484532282397
+                "parameter": "s1",
+                "value": 0.05376194221014779
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 0.0
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.0892005017066936
+                "parameter": "s0",
+                "value": 0.09151016404387635
               },
               {
-                "parameter": "s2",
-                "value": 0.9107994982933065
+                "parameter": "s1",
+                "value": 0.9084898359561238
               }
             ],
             "parentAssignments": [
               {
                 "parent": "8",
-                "value": 1.0
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "label": "Multinomial",
-        "variableID": "8",
-        "parentIDs": [],
-        "rows": [
-          {
-            "parameters": [
-              {
-                "parameter": "s1",
-                "value": 0.6359006924158114
-              },
-              {
-                "parameter": "s2",
-                "value": 0.3640993075841886
+                "value": "s1"
               }
             ]
           }
@@ -464,44 +445,63 @@
       },
       {
         "label": "Multinomial|Multinomial",
-        "variableID": "9",
+        "variableID": "8",
         "parentIDs": [
-          "8"
+          "9"
         ],
         "rows": [
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.030009165164419076
+                "parameter": "s0",
+                "value": 0.266724746267366
               },
               {
-                "parameter": "s2",
-                "value": 0.9699908348355809
+                "parameter": "s1",
+                "value": 0.733275253732634
               }
             ],
             "parentAssignments": [
               {
-                "parent": "8",
-                "value": 0.0
+                "parent": "9",
+                "value": "s0"
               }
             ]
           },
           {
             "parameters": [
               {
-                "parameter": "s1",
-                "value": 0.14453497035884413
+                "parameter": "s0",
+                "value": 0.6571223630284588
               },
               {
-                "parameter": "s2",
-                "value": 0.8554650296411559
+                "parameter": "s1",
+                "value": 0.34287763697154117
               }
             ],
             "parentAssignments": [
               {
-                "parent": "8",
-                "value": 1.0
+                "parent": "9",
+                "value": "s1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Multinomial",
+        "variableID": "9",
+        "parentIDs": [],
+        "rows": [
+          {
+            "parameters": [
+              {
+                "parameter": "s0",
+                "value": 0.05403256893456385
+              },
+              {
+                "parameter": "s1",
+                "value": 0.9459674310654361
               }
             ]
           }
@@ -511,6 +511,6 @@
   },
   "algorithm": "Approximate Bridged Islands",
   "index": 0,
-  "nanoStart": 1.47499005994E12,
-  "nanoFinish": 1.474990070413E12
+  "nanoStart": 1.476799718096E12,
+  "nanoFinish": 1.476799721198E12
 }
