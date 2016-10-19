@@ -44,9 +44,9 @@ export class CptViewComponent implements OnInit {
      private manageStreamListEvent(event: StreamListEvent){
 
 		switch(event.type){
-			case StreamListEventType.EXECUTION_RESULT_SELECTED: this.newSelectedResultEvent(event.content)
-			case StreamListEventType.EXECUTION_RESULT_DELETED: this.newDeletedResultEvent(event.content)
-			case StreamListEventType.STREAM_DELETED: this.newDeletedStreamEvent(event.content)
+			case StreamListEventType.EXECUTION_RESULT_SELECTED: this.newSelectedResultEvent(event.content); break;
+			case StreamListEventType.EXECUTION_RESULT_DELETED: this.newDeletedResultEvent(event.content); break;
+			case StreamListEventType.STREAM_DELETED: this.newDeletedStreamEvent(event.content); break;
 		}
 
 	}

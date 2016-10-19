@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RunAlgorithmService } from './run-algorithm.service'
 import { AvailableAlgorithms } from '../model/algorithms/availableAlgorithms'
@@ -26,7 +27,9 @@ export class RunAlgorithmComponent implements OnInit {
     backdrop: string = 'static';
     cssClass: string = '';
     css: boolean = false;
-
+    // Modal execute forms
+    runABIForm: RunABIForm
+    runSALLForm: RunSALLForm
 
     constructor(private _runAlgorithmService: RunAlgorithmService) { }
 
@@ -36,6 +39,16 @@ export class RunAlgorithmComponent implements OnInit {
             (algorithm) => this.showModal(algorithm),
             (err) => { console.log("There was an error with the runAlgorithmShowModal event emission") }
         );
+
+        // Initialize Run ABI forms
+        this.runABIForm = {
+            selectedFile: '',
+            fssMeasure: '',
+            maxIslandSize: 5,
+            baseLvCardinality: 2,
+            udTestThreshold: 3.0,
+            batchSize: 1000
+        }
 	}
 
     executeABI(): void{
@@ -50,8 +63,8 @@ export class RunAlgorithmComponent implements OnInit {
 
     private showModal(algorithm: AvailableAlgorithms): void {
         switch(algorithm){
-            case AvailableAlgorithms.ABI: this.showABIModal();
-            case AvailableAlgorithms.SALL: this.showSALLModal();
+            case AvailableAlgorithms.ABI: this.showABIModal(); break;
+            case AvailableAlgorithms.SALL: this.showSALLModal(); break;
         }
     }
 
@@ -65,10 +78,15 @@ export class RunAlgorithmComponent implements OnInit {
 
 }
 
-export class RunABIForm{
-
+export interface RunABIForm {
+    selectedFile: string;
+    fssMeasure: string;
+    maxIslandSize: number;
+    baseLvCardinality: number;
+    udTestThreshold: number;
+    batchSize: number;
 }
 
 export class RunSALLForm{
-    
+    //TODO
 }
