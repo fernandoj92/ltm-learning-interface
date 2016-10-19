@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable'
 import { InMemoryDataService } from '../services/storage/in-memory-data.service'
 import { IpcInputService } from '../services/ipc/ipc-input.service'
 import { IpcOutputService } from '../services/ipc/ipc-output.service'
+import { RunAlgorithmService } from '../run-algorithm/run-algorithm.service'
 
 @Component({
     moduleId: module.id,
@@ -17,14 +18,21 @@ export class ServiceNotificationsComponent implements OnInit {
     // InMemoryDataService
     private inMemoryServiceNotifications: Observable<string>
     private inMemoryServiceNotificationsSubscription
-    // IpcService
-    private ipcServiceNotifications: Observable<string>
-    private ipcServiceNotificationsSubscription
+    // IpcInputService
+    private ipcInputServiceNotifications: Observable<string>
+    private ipcInputServiceNotificationsSubscription
+    //IpcOutputService
+    private ipcOutputServiceNotifications: Observable<string>
+    private ipcOutputServiceNotificationsSubscription
+    // RunAlgorithmService
+    private runAlgorithmServiceNotifications: Observable<string>
+    private runAlgorithmServiceNotificationsSubscription
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
         private _ipcInputService: IpcInputService, 
-        private _ipcOutputService: IpcOutputService) { }
+        private _ipcOutputService: IpcOutputService,
+        private _runAlgorithmService: RunAlgorithmService) { }
 
     ngOnInit() {
 
@@ -37,21 +45,28 @@ export class ServiceNotificationsComponent implements OnInit {
         );
 
         // IpcInputService
-        this.ipcServiceNotifications = this._ipcInputService.getNotificationGenerator()
-        this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
+        this.ipcInputServiceNotifications = this._ipcInputService.getNotificationGenerator()
+        this.ipcInputServiceNotificationsSubscription = this.ipcInputServiceNotifications.subscribe(
             (msg) => { this.logMessageFunc(this._ipcInputService.name(), msg) },
             (err) => { this.logErrorFunc(this._ipcInputService.name(), err) },
             ()    => { this.logCompletedFunc(this._ipcInputService.name())}
         );
 
         // IpcOutputService
-        this.ipcServiceNotifications = this._ipcOutputService.getNotificationGenerator()
-        this.ipcServiceNotificationsSubscription = this.ipcServiceNotifications.subscribe(
+        this.ipcOutputServiceNotifications = this._ipcOutputService.getNotificationGenerator()
+        this.ipcOutputServiceNotificationsSubscription = this.ipcOutputServiceNotifications.subscribe(
             (msg) => { this.logMessageFunc(this._ipcOutputService.name(), msg) },
             (err) => { this.logErrorFunc(this._ipcOutputService.name(), err) },
             ()    => { this.logCompletedFunc(this._ipcOutputService.name())}
         );
-        
+
+        // RunAlgorithmService
+        this.runAlgorithmServiceNotifications =  this._runAlgorithmService.getNotificationGenerator();
+        this.runAlgorithmServiceNotificationsSubscription = this.runAlgorithmServiceNotifications.subscribe(
+            (msg) => { this.logMessageFunc(this._runAlgorithmService.name(), msg) },
+            (err) => { this.logErrorFunc(this._runAlgorithmService.name(), err) },
+            ()    => { this.logCompletedFunc(this._runAlgorithmService.name())}
+        );
      }
 
      private logMessageFunc = (service: string, msg: string) => {

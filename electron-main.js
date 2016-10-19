@@ -38,8 +38,8 @@ let setApplicationMenu = () => {
   let menus = [
     fileMenu.template,
     runMenu.template, 
-    editMenu.template, 
-    //devMenu.template
+    //editMenu.template, 
+    devMenu.template
   ];
 
   // Functionalities
@@ -97,13 +97,15 @@ let setApplicationMenu = () => {
     } // Open file click()
   
   // ===== Run menu ===== 
-  menus[1].find(item => item.label === 'Approximate Bridged Islands')
+  menus[1].submenu
+    .find(item => item.label === 'Approximate Bridged Islands')
     .click = () => {
       console.log("ABI - click called")
-      mainWindow.webContents.send('run-abi');
+      mainWindow.webContents.send('run-abi', 'run-abi-void-msg-content');
     }
   
-  menus[1].find(item => item.label === 'SALL')
+  menus[1].submenu
+    .find(item => item.label === 'SALL')
     .click = () => {
       console.log("SALL - click called")
       mainWindow.webContents.send('run-sall');

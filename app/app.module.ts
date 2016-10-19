@@ -14,6 +14,7 @@ import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
 import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
 import { ContextMenuHolderComponent } from './contextmenu/contextmenu-holder.component'
 import { ModalWindowTestComponent } from './modal-window-testing/modal-window-test.component'
+import { RunAlgorithmComponent } from './run-algorithm/run-algorithm.component'
 // Directives
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
@@ -22,6 +23,7 @@ import { IpcOutputService} from './services/ipc/ipc-output.service'
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
 import { StreamListOutputService } from './stream-list/stream-list-output.service'
+import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
 
 @NgModule({
   imports:      [ 
@@ -35,6 +37,7 @@ import { StreamListOutputService } from './stream-list/stream-list-output.servic
     InMemoryDataService,
     MyContextMenuService, 
     StreamListOutputService,
+    RunAlgorithmService
    ],
    declarations: [ 
     AppComponent,
@@ -46,7 +49,8 @@ import { StreamListOutputService } from './stream-list/stream-list-output.servic
     TestCytoscapeComponent,
     ContextMenuDirective,
     ContextMenuHolderComponent,
-    ModalWindowTestComponent
+    ModalWindowTestComponent, 
+    RunAlgorithmComponent
    ],
   bootstrap:    [ AppComponent ]
 })
