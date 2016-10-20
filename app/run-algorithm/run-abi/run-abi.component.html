@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="selectedFile">Selected file</label>
+                <label for="selectedFile">Selected file</label> <span><a href="#" (click)="getDataFileNames()">Update</a></span>
                 <select class="form-control" required [(ngModel)]="abiParameters.selectedFile" id="selectedFile" formControlName="selectedFile">
                     <option *ngFor="let selectedFile of availableDataFiles" [value]="selectedFile">{{selectedFile}}</option>
                 </select>

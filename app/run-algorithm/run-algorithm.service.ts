@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
+import 'rxjs/add/operator/catch';
 
 import { AbstractNotificationService } from '../services/notification/abstractNotificationService'
 import { IpcInputService } from '../services/ipc/ipc-input.service'
+import { HttpService } from '../services/http/http.service'
 import { AvailableAlgorithms } from '../model/algorithms/availableAlgorithms'
 
 // This service acts as an intermediary between the Electron menu and the http/Websocket msg sending,
@@ -21,7 +24,10 @@ export class RunAlgorithmService extends AbstractNotificationService{
     private ipcRunAlgorithmEvents: Observable<AvailableAlgorithms>;
     private ipcRunAlgorithmEventsSubscription;
 
-    constructor(private _ipcInputService: IpcInputService) {
+    constructor(
+        private _ipcInputService: IpcInputService,
+        private _httpService: HttpService
+    ) {
         super('RunAlgorithmService')
 
         this.showRunABIModalEventEmitter = new Subject<string>();
@@ -51,6 +57,14 @@ export class RunAlgorithmService extends AbstractNotificationService{
     // Websocket
     executeSALL(): void {
         this.notifyMsg("executing the SALL algorithm");
+    }
+
+    getLocalDataFileNames(): Observable<string[]>{
+        return this._httpService.getLocalDataFileNames();
+    }
+
+    getFssMeasures(): Observable<string[]> {
+        return this._httpService.getFssMeasures();
     }
 
     private runAlgorithm(algorithm: AvailableAlgorithms): void {

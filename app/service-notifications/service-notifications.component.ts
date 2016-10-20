@@ -7,6 +7,7 @@ import { InMemoryDataService } from '../services/storage/in-memory-data.service'
 import { IpcInputService } from '../services/ipc/ipc-input.service'
 import { IpcOutputService } from '../services/ipc/ipc-output.service'
 import { RunAlgorithmService } from '../run-algorithm/run-algorithm.service'
+import { HttpService } from '../services/http/http.service'
 
 @Component({
     moduleId: module.id,
@@ -27,12 +28,16 @@ export class ServiceNotificationsComponent implements OnInit {
     // RunAlgorithmService
     private runAlgorithmServiceNotifications: Observable<string>
     private runAlgorithmServiceNotificationsSubscription
+    // HttpService
+    private httpServiceNotifications: Observable<string>
+    private httpServiceNotificationsSubscription
 
     constructor(
         private _inMemoryDataService: InMemoryDataService,
         private _ipcInputService: IpcInputService, 
         private _ipcOutputService: IpcOutputService,
-        private _runAlgorithmService: RunAlgorithmService) { }
+        private _runAlgorithmService: RunAlgorithmService, 
+        private _httpService: HttpService) { }
 
     ngOnInit() {
 
@@ -66,6 +71,14 @@ export class ServiceNotificationsComponent implements OnInit {
             (msg) => { this.logMessageFunc(this._runAlgorithmService.name(), msg) },
             (err) => { this.logErrorFunc(this._runAlgorithmService.name(), err) },
             ()    => { this.logCompletedFunc(this._runAlgorithmService.name())}
+        );
+
+        // HttpService
+        this.httpServiceNotifications =  this._httpService.getNotificationGenerator();
+        this.httpServiceNotificationsSubscription = this.httpServiceNotifications.subscribe(
+            (msg) => { this.logMessageFunc(this._httpService.name(), msg) },
+            (err) => { this.logErrorFunc(this._httpService.name(), err) },
+            ()    => { this.logCompletedFunc(this._httpService.name())}
         );
      }
 

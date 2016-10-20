@@ -52,7 +52,8 @@ export class RunSALLComponent implements OnInit{
 	}
 
     showModal(){
-        this.runSALLModal.open()
+        if(this.runSALLModal.visible === false)
+            this.runSALLModal.open()
     }
 
     executeSALL(){

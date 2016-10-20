@@ -31,8 +31,8 @@ export class RunABIComponent implements OnInit{
     runABIForm: FormGroup;
     // ABI Parameters
     abiParameters: ABIParameters
-    availableFssMeasures = ["Mutual Information"]
-    availableDataFiles = []
+    availableFssMeasures = []
+    availableDataFiles = new Array<string>()
 
     constructor(
         private fb: FormBuilder,
@@ -56,15 +56,39 @@ export class RunABIComponent implements OnInit{
         }
 
         this.buildForm();
-	}
+	  }
 
     showModal() {
-      this.runABIModal.open();
+      if(this.runABIModal.visible === false){
+          this.runABIModal.open();
+          this.getDataFileNames();
+          this.getFssMeasures();
+      }
     }
 
     executeABI(){
         this.runABIModal.close();
         this._runAlgorithmService.executeABI();
+    }
+
+    getDataFileNames() {
+      this._runAlgorithmService.getLocalDataFileNames().subscribe(
+        (localDataFileNames) => {
+          this.availableDataFiles = localDataFileNames
+          if(this.availableDataFiles.length >= 1)
+            this.abiParameters.selectedFile = this.availableDataFiles[0];
+        }
+      );
+    }
+
+    getFssMeasures() {
+      this._runAlgorithmService.getFssMeasures().subscribe(
+        (fssMeasures) => {
+          this.availableFssMeasures = fssMeasures
+          if(this.availableFssMeasures.length >= 1)
+            this.abiParameters.fssMeasure = this.availableFssMeasures[0];
+        }
+      );
     }
 
     buildForm(): void {
