@@ -3,6 +3,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // Modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 // Components
 import { AppComponent }   from './app.component';
@@ -22,6 +23,7 @@ import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 import { IpcInputService } from './services/ipc/ipc-input.service';
 import { IpcOutputService} from './services/ipc/ipc-output.service'
 import { InMemoryDataService } from './services/storage/in-memory-data.service'
+import { HttpService } from './services/http/http.service'
 import { MyContextMenuService } from './contextmenu/contextmenu.service'
 import { StreamListOutputService } from './stream-list/stream-list-output.service'
 import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
@@ -31,6 +33,8 @@ import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpModule,
+    JsonpModule,
     Ng2Bs3ModalModule
   ],
   providers:    [ 
@@ -39,7 +43,8 @@ import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
     InMemoryDataService,
     MyContextMenuService, 
     StreamListOutputService,
-    RunAlgorithmService
+    RunAlgorithmService,
+    HttpService
    ],
    declarations: [ 
     AppComponent,

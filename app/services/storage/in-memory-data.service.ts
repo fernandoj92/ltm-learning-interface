@@ -67,7 +67,7 @@ export class InMemoryDataService extends AbstractNotificationService{
     public exportStream(streamCopy: Stream, fileFormat: string){
         // TODO: junto con el import
     }
-
+    // TODO: modificar para que valga tanto para HTTP como para file
     private loadResultInMemory = (executionResultJson: JsonExecutionResult): void =>{
         try {
             // Test notification message

@@ -8,12 +8,10 @@ export abstract class AbstractNotificationService{
 
     constructor(serviceName: string){
         this.serviceName = serviceName
+        this.notificationGenerator = new Subject<string>();
     }
 
     public getNotificationGenerator(): Observable<string>{
-       if(!this.notificationGenerator)
-            this.notificationGenerator = new Subject<string>();
-
        return this.notificationGenerator.asObservable()
     }
     
