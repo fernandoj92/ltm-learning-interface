@@ -1,0 +1,77 @@
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #runABIModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Execute ABI algorithm</h4>
+    </modal-header>
+    <form [formGroup]="runABIForm" (ngSubmit)="executeABI()">
+        <modal-body>
+            <div class="form-group">
+                <label for="fssMeasure">FSS Measure</label>
+                <select class="form-control" required [(ngModel)]="abiParameters.fssMeasure" id="fssMeasure" formControlName="fssMeasure">
+                    <option *ngFor="let fssMeasure of availableFssMeasures" [value]="fssMeasure">{{fssMeasure}}</option>
+                </select>
+                
+                <div *ngIf="formErrors.fssMeasure" class="alert alert-danger">
+                {{ formErrors.fssMeasure }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selectedFile">Selected file</label>
+                <select class="form-control" required [(ngModel)]="abiParameters.selectedFile" id="selectedFile" formControlName="selectedFile">
+                    <option *ngFor="let selectedFile of availableDataFiles" [value]="selectedFile">{{selectedFile}}</option>
+                </select>
+                
+                <div *ngIf="formErrors.selectedFile" class="alert alert-danger">
+                {{ formErrors.selectedFile }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Max island size</label>
+                <input class="form-control" required 
+                [(ngModel)]="abiParameters.maxIslandSize" 
+                type="number"
+                formControlName="maxIslandSize" id="maxIslandSize" >
+
+                <div *ngIf="formErrors.maxIslandSize" class="alert alert-danger">
+                {{ formErrors.maxIslandSize }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Base LV cardinality</label>
+                <input class="form-control" required 
+                [(ngModel)]="abiParameters.baseLvCardinality" 
+                type="number" step="1"
+                formControlName="baseLvCardinality" id="baseLvCardinality">
+
+                <div *ngIf="formErrors.baseLvCardinality" class="alert alert-danger">
+                {{ formErrors.baseLvCardinality }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>UD test threshold</label>
+                <input class="form-control" required 
+                [(ngModel)]="abiParameters.udTestThreshold" 
+                type="number" step="0.1"
+                formControlName="udTestThreshold" id="udTestThreshold">
+
+                <div *ngIf="formErrors.udTestThreshold" class="alert alert-danger">
+                {{ formErrors.udTestThreshold }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Batch size</label>
+                <input class="form-control" required 
+                [(ngModel)]="abiParameters.batchSize" 
+                type="number" step=1
+                formControlName="batchSize" id="batchSize">
+
+                <div *ngIf="formErrors.batchSize" class="alert alert-danger">
+                {{ formErrors.batchSize }}
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <button type="submit" [disabled]="!runABIForm.valid" class="btn btn-default" data-dismiss="modal">Execute</button>
+            <button type="button" class="btn btn-primary" autofocus (click)="runABIModal.close()">Cancel</button>
+        </modal-footer>
+    </form>
+</modal>

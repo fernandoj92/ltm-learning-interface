@@ -2,7 +2,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // Modules
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 // Components
 import { AppComponent }   from './app.component';
@@ -14,7 +14,8 @@ import { TestDagComponent } from './dashboard/test-dag/test-dag.component'
 import { TestCytoscapeComponent } from './dashboard/test-cytoscape/test-cytoscape.component'
 import { ContextMenuHolderComponent } from './contextmenu/contextmenu-holder.component'
 import { ModalWindowTestComponent } from './modal-window-testing/modal-window-test.component'
-import { RunAlgorithmComponent } from './run-algorithm/run-algorithm.component'
+import { RunABIComponent } from './run-algorithm/run-abi/run-abi.component'
+import { RunSALLComponent } from './run-algorithm/run-sall/run-sall.component'
 // Directives
 import { ContextMenuDirective } from './contextmenu/contextmenu.directive'
 // Services
@@ -29,6 +30,7 @@ import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
   imports:      [ 
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     Ng2Bs3ModalModule
   ],
   providers:    [ 
@@ -50,7 +52,8 @@ import { RunAlgorithmService } from './run-algorithm/run-algorithm.service'
     ContextMenuDirective,
     ContextMenuHolderComponent,
     ModalWindowTestComponent, 
-    RunAlgorithmComponent
+    RunABIComponent, 
+    RunSALLComponent
    ],
   bootstrap:    [ AppComponent ]
 })

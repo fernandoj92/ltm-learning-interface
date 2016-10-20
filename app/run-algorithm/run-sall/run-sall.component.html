@@ -1,0 +1,12 @@
+<modal [animation]="animation" [keyboard]="keyboard" [backdrop]="backdrop" [cssClass]="cssClass" #runSALLModal  >
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Execute SALL algorithm</h4>
+    </modal-header>
+    <modal-body>
+        Prepare to execute
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="executeSALL()">Execute</button>
+        <button type="button" class="btn btn-primary" autofocus (click)="runSALLModal.close()">Cancel</button>
+    </modal-footer>
+</modal>

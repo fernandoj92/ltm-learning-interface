@@ -15,7 +15,8 @@ import { AvailableAlgorithms } from '../model/algorithms/availableAlgorithms'
 export class RunAlgorithmService extends AbstractNotificationService{
 
     // Event emitters
-    private showRunAlgorithmModalEventEmitter: Subject<AvailableAlgorithms>;
+    private showRunABIModalEventEmitter: Subject<string>;
+    private showRunSALLModalEventEmitter: Subject<string>;
     // Event receivers
     private ipcRunAlgorithmEvents: Observable<AvailableAlgorithms>;
     private ipcRunAlgorithmEventsSubscription;
@@ -23,7 +24,8 @@ export class RunAlgorithmService extends AbstractNotificationService{
     constructor(private _ipcInputService: IpcInputService) {
         super('RunAlgorithmService')
 
-        this.showRunAlgorithmModalEventEmitter = new Subject<AvailableAlgorithms>();
+        this.showRunABIModalEventEmitter = new Subject<string>();
+        this.showRunSALLModalEventEmitter = new Subject<string>();
 
         this.ipcRunAlgorithmEvents =  this._ipcInputService.getRunAlgorithmEvents();
         this.ipcRunAlgorithmEventsSubscription =  this.ipcRunAlgorithmEvents
@@ -33,22 +35,41 @@ export class RunAlgorithmService extends AbstractNotificationService{
         );
     }
 
-    public getShowRunAlgorithmModalEvents(): Observable<AvailableAlgorithms> {
-        return this.showRunAlgorithmModalEventEmitter.asObservable();
+    getShowRunABIModalEvents(): Observable<string> {
+        return this.showRunABIModalEventEmitter.asObservable();
+    }
+
+    getShowRunSALLModalEvents(): Observable<string> {
+        return this.showRunSALLModalEventEmitter.asObservable();
     }
 
     // HTTP
-    public executeABI(): void {
+    executeABI(): void {
         this.notifyMsg("executing the ABI algorithm");
     }
 
     // Websocket
-    public executeSALL(): void {
+    executeSALL(): void {
         this.notifyMsg("executing the SALL algorithm");
     }
 
     private runAlgorithm(algorithm: AvailableAlgorithms): void {
-        this.showRunAlgorithmModalEventEmitter.next(algorithm);
+        this.notifyMsg("run-algorithm")
+        // Aqui enviamos el mensage al componente específico
+       switch(algorithm){
+            case AvailableAlgorithms.ABI: this.showABIModal(); break;
+            case AvailableAlgorithms.SALL: this.showSALLModal(); break;
+        }
+    }
+
+    private showABIModal(): void {
+        this.notifyMsg("show-abi")
+        this.showRunABIModalEventEmitter.next("run-abi");
+    }
+
+    private showSALLModal(): void {
+        this.notifyMsg("show-sall")
+        this.showRunSALLModalEventEmitter.next("run-sall");
     }
 
 }
