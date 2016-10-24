@@ -49,7 +49,7 @@ export class RunABIComponent implements OnInit{
         this.abiParameters = {
             selectedFile: '',
             fssMeasure: this.availableFssMeasures[0],
-            maxIslandSize: 5,
+            maxIslandSize: 8,
             baseLvCardinality: 2,
             udTestThreshold: 3.0,
             batchSize: 1000
@@ -68,7 +68,8 @@ export class RunABIComponent implements OnInit{
 
     executeABI(){
         this.runABIModal.close();
-        this._runAlgorithmService.executeABI();
+        console.log("run-abi.component: executeABI()")
+        this._runAlgorithmService.executeABI(this.abiParameters);
     }
 
     getDataFileNames() {

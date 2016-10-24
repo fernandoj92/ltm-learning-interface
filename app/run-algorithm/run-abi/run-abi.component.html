@@ -2,7 +2,7 @@
     <modal-header [show-close]="true">
         <h4 class="modal-title">Execute ABI algorithm</h4>
     </modal-header>
-    <form [formGroup]="runABIForm" (ngSubmit)="executeABI()">
+    <form [formGroup]="runABIForm" >
         <modal-body>
             <div class="form-group">
                 <label for="fssMeasure">FSS Measure</label>
@@ -70,7 +70,7 @@
             </div>
         </modal-body>
         <modal-footer>
-            <button type="submit" [disabled]="!runABIForm.valid" class="btn btn-default" data-dismiss="modal">Execute</button>
+            <button type="submit" [disabled]="!runABIForm.valid" class="btn btn-default" (click)="executeABI()" data-dismiss="modal">Execute</button>
             <button type="button" class="btn btn-primary" autofocus (click)="runABIModal.close()">Cancel</button>
         </modal-footer>
     </form>

@@ -5,6 +5,7 @@ import { Stream } from '../../model/stream'
 import { ExecutionResult, JsonExecutionResult, FileOutExecutionResult } from '../../model/executionResult'
 import { AbstractNotificationService } from '../notification/abstractNotificationService'
 import { IpcInputService } from '../ipc/ipc-input.service'
+import { HttpService } from '../http/http.service'
 import * as JsonTransform from '../../util/jsonTransform'
 import * as UUID from '../../util/uuid'
 
@@ -23,8 +24,11 @@ export class InMemoryDataService extends AbstractNotificationService{
     // Event receivers
     private ipcLoadExecutionResultEvents: Observable<JsonExecutionResult>;
     private ipcLoadExecutionResultEventsSubscription;
+    private httpRunABIExecutionResultEvents: Observable<JsonExecutionResult>;
+    private httpRunABIExecutionResultEventsSubscription;
 
-    constructor(private _ipcInputService: IpcInputService){
+    constructor(private _ipcInputService: IpcInputService,
+                private _httpService: HttpService){
         super('InMemoryDataService')
         this.streams =  new IdCollection<Stream>();
 
@@ -32,15 +36,25 @@ export class InMemoryDataService extends AbstractNotificationService{
         this.ipcExportExecutionResultEventEmitter = new Subject<FileOutExecutionResult>();
         this.ipcExportStreamEventEmitter = new Subject<Stream>();
 
-        this.ipcLoadExecutionResultEvents =  this._ipcInputService.getLoadExecutionResultEvents()
+        // IPC-In loadExecutionResult
+        this.ipcLoadExecutionResultEvents =  this._ipcInputService.getLoadExecutionResultEvents();
         this.ipcLoadExecutionResultEventsSubscription =  this.ipcLoadExecutionResultEvents
         .subscribe(
-            (executionResultJson) => this.loadResultInMemory(executionResultJson),
+            (executionResultJson) => this.loadResultInMemory(executionResultJson, 'File'),
             (error) => this.notifyMsg('IPC loadExecutionResult event error')
-        )
+        );
+        
+        // HTPP RunABIExecutionResult
+        this.httpRunABIExecutionResultEvents = this._httpService.getRunABIResultEvents();
+        this.httpRunABIExecutionResultEventsSubscription = this.httpRunABIExecutionResultEvents.subscribe(
+            (executionResultJson) => this.loadResultInMemory(executionResultJson, 'Http'),
+            (error) => this.notifyMsg('Http RunABIExecutionResult event error')
+        );
     }
 
-    public getStreamsReference(): IdCollection<Stream> { return this.streams }
+    public getStreamsReference(): IdCollection<Stream> { 
+        return this.streams 
+    }
 
     public getStreamsEventEmitter(): Observable<string> {
        return this.streamsEventEmitter.asObservable()
@@ -67,11 +81,9 @@ export class InMemoryDataService extends AbstractNotificationService{
     public exportStream(streamCopy: Stream, fileFormat: string){
         // TODO: junto con el import
     }
-    // TODO: modificar para que valga tanto para HTTP como para file
-    private loadResultInMemory = (executionResultJson: JsonExecutionResult): void =>{
+
+    private loadResultInMemory = (executionResultJson: JsonExecutionResult, type: string): void =>{
         try {
-            // Test notification message
-            this.notifyMsg('IPC loadExecutionResult event succesfully received')
             // Json transformation
             JsonTransform.checkExecutionResultJson(executionResultJson)
             // Create the model object equivalent for JsonExecutionResult
@@ -79,15 +91,15 @@ export class InMemoryDataService extends AbstractNotificationService{
             
             // Check if its corresponding stream currently exists in memory
             if(newExecutionResult.streamId === void 0){
-                let newFileStreamUUID = UUID.randomUUID()
+                let newStreamUUID = UUID.randomUUID()
                 let erCollection = new IdCollection<ExecutionResult>();
-                newExecutionResult.streamId = newFileStreamUUID
+                newExecutionResult.streamId = newStreamUUID
                 erCollection.add(newExecutionResult)
                 let streamCreateDate = new Date()
                 let newFileStream =  new Stream(
                     erCollection, 
-                    newFileStreamUUID, 
-                    "File Stream "+  moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
+                    newStreamUUID, 
+                    type + " Stream "+  moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
                     streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components
@@ -101,7 +113,7 @@ export class InMemoryDataService extends AbstractNotificationService{
                 let newFileStream =  new Stream(
                     erCollection, 
                     newExecutionResult.streamId, 
-                    "File Stream "+ moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
+                    type + " Stream "+ moment(streamCreateDate).format("HH:MM:SS DD-MM-YYYY"),
                     streamCreateDate)
                 this.streams.add(newFileStream)
                 // Notify the subscribed components

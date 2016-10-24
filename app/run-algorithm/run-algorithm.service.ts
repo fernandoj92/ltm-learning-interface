@@ -9,6 +9,7 @@ import { AbstractNotificationService } from '../services/notification/abstractNo
 import { IpcInputService } from '../services/ipc/ipc-input.service'
 import { HttpService } from '../services/http/http.service'
 import { AvailableAlgorithms } from '../model/algorithms/availableAlgorithms'
+import { ABIParameters } from '../model/algorithms/availableAlgorithms'
 
 // This service acts as an intermediary between the Electron menu and the http/Websocket msg sending,
 // it will send a request to the runAlgorithmComponent to open the appropiate modal that will send
@@ -50,8 +51,9 @@ export class RunAlgorithmService extends AbstractNotificationService{
     }
 
     // HTTP
-    executeABI(): void {
+    executeABI(abiParameters: ABIParameters): void {
         this.notifyMsg("executing the ABI algorithm");
+        this._httpService.executeABI(abiParameters);
     }
 
     // Websocket
